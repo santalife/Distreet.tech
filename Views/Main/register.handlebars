@@ -1,0 +1,145 @@
+<div class="container w-75">
+    <form method="post">
+        <div class="row g-3">
+            <h2 class="fw-bolder"><i class="fas fa-user-circle"></i> Personal Details</h2>
+            <p class="mt-0 mb-2">Enter the all the compulsory fields here to apply for an account on Distreet</p>
+            <div asp-validation-summary="All"></div>
+            <div class="col-md-12">
+                <label for="input-profile-picture" class="form-label fw-bold">Profile Picture</label>
+                <input type="file" id="input-profile-picture" class="filepond" asp-for="Input.ProfilePictureJson">
+            </div>
+            
+            <div class="col-md-6">
+                <label for="input-full-name" class="form-label fw-bold">Full Name<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="input-full-name" asp-for="Input.FullName">
+            </div>
+            <div class="col-md-6">
+                <label for="input-email" class="form-label fw-bold">Email<span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="input-email" asp-for="Input.Email">
+            </div>
+            <div class="col-md-6">
+                <label for="input-address-street" class="form-label fw-bold">Address Street<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="input-address-street" placeholder="Eunos Crescent" asp-for="Input.AddressStreet">
+            </div>
+            <div class="col-md-2">
+                <label for="input-block-number" class="form-label fw-bold">Block Number </label>
+                <input type="text" class="form-control" id="input-block-number" placeholder="11" asp-for="Input.BlockNumber">
+            </div>
+            <div class="col-md-2">
+                <label for="input-house-number" class="form-label fw-bold">Unit Number<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="input-house-number" placeholder="#16-2741 or 38" asp-for="Input.UnitNumber">
+            </div>
+            <div class="col-md-2">
+                <label for="input-house-number" class="form-label fw-bold">Postal Code<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="input-postal-code" placeholder="400011" asp-for="Input.PostalCode">
+            </div>
+            <div class="col-md-6">
+                <label for="input-phone-number" class="form-label fw-bold">Phone Number<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="input-phone-number" placeholder="90093180" asp-for="Input.PhoneNumber">
+            </div>
+
+            <div class="col-md-3">
+                <label for="input-dob" class="form-label fw-bold">Date of Birth<span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="input-dob" placeholder="S1557535B" asp-for="Input.DateOfBirth">
+            </div>
+
+            <div class="col-md-3">
+                <label for="input-nric" class="form-label fw-bold">NRIC<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="input-nric" placeholder="S1557535B" asp-for="Input.NRIC">
+            </div>
+
+            <div class="col-md-6">
+                <label for="password" class="form-label fw-bold">Password<span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="password" placeholder="" asp-for="Input.Password">
+            </div>
+
+            <div class="col-md-6">
+                <label for="confirm-password" class="form-label fw-bold">Confirm Password<span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="confirm-password" placeholder="" asp-for="Input.ConfirmPassword">
+            </div>
+        </div>
+        <div class="row g-3 mt-3">
+            <h2 class="fw-bolder"><i class="fas fa-grin"></i> Optional Details</h2>
+            <p class="mt-0 mb-2">You can choose to either enter or leave out the fields in this section</p>
+
+            <div class="col-md-12">
+                <label for="input-workplace" class="form-label fw-bold">Workplace</label>
+                <input type="text" class="form-control" id="input-workplace" placeholder="Tesla, Inc.">
+            </div>
+
+            <div class="col-md-12">
+                <label for="input-school" class="form-label fw-bold">School</label>
+                <input type="text" class="form-control" id="input-school" placeholder="Spring Brainy Kidz">
+            </div>
+
+            <div class="col-md-6">
+                <label for="input-current-city" class="form-label fw-bold">Current City</label>
+                <input type="text" class="form-control" id="input-current-city" placeholder="Ukraine">
+            </div>
+
+            <div class="col-md-6">
+                <label for="input-hometown" class="form-label fw-bold">Hometown</label>
+                <input type="text" class="form-control" id="input-hometown" placeholder="Malaysia">
+            </div>
+
+            <div class="col-md-3">
+                <label for="input-relationship" class="form-label fw-bold">Relationship</label>
+                <select id="input-relationship" class="form-select">
+                    <option>Single</option>
+                    <option>Taken</option>
+                    <option>It's Complicated</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <h2 class="fw-bolder"><i class="fas fa-upload"></i> Documents Uploads</h2>
+            <p class="mt-0 mb-2">This section is for you to upload any files/documents that proofs that you live in this district</p>
+
+            <div class="col-md-12">
+                <label for="input-documents" class="form-label fw-bold">File Upload</label>
+                <input type="file" id="input-documents" class="filepond">
+            </div>
+        </div>
+        
+        <div class="row g-3 mt-3">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary w-100">Apply</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+
+<script>
+    FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode, FilePondPluginFileMetadata, FilePondPluginImageCrop, FilePondPluginImageTransform);
+    const profilepictureElem = document.querySelector('#input-profile-picture');
+    const profilepicturePond= FilePond.create(profilepictureElem);
+
+    profilepicturePond.setOptions({
+        maxFiles: 1,
+        labelIdle: 'Drag & Drop your Photos or <span class="filepond--label-action">Browse</span>',
+        allowImageCrop: true,
+        allowImageTransform: true,
+        imageCropAspectRatio: '1:1',
+    });
+    
+    const documentsElem = document.querySelector('#input-documents');
+    const documentsPond= FilePond.create(documentsElem);
+
+    documentsPond.setOptions({
+        maxFiles: 10,
+        allowMultiple: true,
+        allowReorder: true,
+        labelIdle: 'Drag & Drop your Documents or <span class="filepond--label-action">Browse</span>',
+        allowImageCrop: true,
+        allowImageTransform: true,
+        imageCropAspectRatio: '1:1',
+    });
+</script>

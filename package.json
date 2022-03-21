@@ -1,0 +1,23 @@
+{
+  "name": "distreet.tech",
+  "version": "1.0.0",
+  "description": "A personal project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santalife/Distreet.tech.git"
+  },
+  "author": "Joyboy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/santalife/Distreet.tech/issues"
+  },
+  "homepage": "https://github.com/santalife/Distreet.tech#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3"
+  }
+}

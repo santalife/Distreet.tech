@@ -1,0 +1,77 @@
+﻿.profile-img{
+  width: 168px;
+  height: 168px;
+}
+
+.intro-title{
+  font-weight: 750;
+}
+
+.input-profile-img{
+  width: 38px;
+  height: 38px;
+}
+
+.post-profile-img{
+  width: 55px;
+  height: 55px;
+}
+
+.posting-text{
+  font-weight: 750;
+}
+
+.photo-btn{
+  color: $danger;
+}
+.memories-btn{
+  color: $keppel;
+}
+.gathering-btn{
+  color: $blue-munsell;
+}
+.posts-username{
+  font-weight: 550;
+}
+.like-btn{
+  color: $danger;
+  font-weight: 550;
+}
+.comment-btn{
+  color: $keppel;
+  font-weight: 550;
+}
+.share-btn{
+  color: $blue-munsell;
+  font-weight: 550;
+}
+
+.post-btn-section .nav-pills .like-btn .nav-link{
+  color: $danger;
+}
+
+.post-btn-section .nav-pills .nav-link.active{
+  background-color: $danger;
+}
+
+#friends-searchbar{
+  padding-left: 2.375rem;
+}
+
+.photos-images{
+  object-fit: cover; /* Do not scale the image */
+  //object-position: center; /* Center the image within the element */
+  width: 100%;
+  height: 100%;
+  max-width: 190.66px;
+  max-height: 190.66px;
+
+}
+
+.overview-icon{
+  width: 32px;
+}
+
+.comment-block{
+  border-radius: 18px !important;
+}

@@ -1,0 +1,83 @@
+﻿//My Theme Colours
+$keppel: #52B69A;
+$ocean-green: #76C893;
+$granny-smith-apple: #99D98C;
+$yellow-green-crayola: #D9ED92;
+$yellow-green-crayola-100: #B5E48C;
+
+$yale-blue: #184E77;
+$lapis-lazuli: #1E6091;
+$cg-blue: #1A759F;
+$blue-munsell: #168AAD;
+$virdian-green: #34A0A4;
+
+
+//$primary:  $keppel;
+//$secondary: $virdian-green;
+$primary:  #a4b494;
+$secondary: #d4cbba;
+$success: #48c78e;
+$danger: #f14668;
+$warning: #ffe08a;
+
+$offcanvas-vertical-height: 95vh;
+@import "../lib/bootstrap/scss/bootstrap";
+@import "index";
+@import "dropdown";
+@import "events";
+@import "profile";
+@import "login";
+
+body{
+  font-family: 'Nunito', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.navbar-text {
+  //color: mintcream !important;
+  font-weight: 700;
+}
+
+#searchbar {
+  padding-left: 2.375rem;
+  //width: 800px;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+::placeholder {
+  font-style: italic;
+  color: #a6a6a6;
+  font-weight: 600;
+}
+
+.dropdown-toggle::after {
+  border: none!important;
+  font-family: "Font Awesome 5 Pro" ;
+  font-size: 15px;
+  font-weight: 900;
+  content: "\f107"!important; /* the desired FontAwesome icon */
+  vertical-align: 0; /* to center vertically */
+}
+
+.bd-callout{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-left: 1px solid $primary;
+  border-left-width: 6px;
+  border-radius: 0.25rem;
+}
+
+.fs-7{
+  font-size: $font-size-base * 0.75;
+}
