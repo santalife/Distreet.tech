@@ -11,10 +11,12 @@ const handlebars = require('express-handlebars');
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const adminRoute = require('./routes/admin');
+const eventRoute = require('./Routes/event');
 
 app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/admin', adminRoute);
+app.use('/event', eventRoute);
 
 
 //Sets our app to use the handlebars engine

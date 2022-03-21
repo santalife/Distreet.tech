@@ -1,0 +1,219 @@
+<style>
+.theme-ravenclaw {
+  --fa-primary-color: #4d40ca;
+  --fa-secondary-color: #b9b2f3;
+}
+</style>
+
+<h2 class="mb-5 fw-bold">All Events</h2>
+
+<div class="row g-3 mb-5">
+    <div class="col-md-1">
+        <span class="fs-4">Type:</span>
+    </div>
+    <div class="col-md-11">
+        <div class="row g-3">
+            <div class="col-auto">
+                <a class="btn btn-primary rounded-pill event-type-filter">All types</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Concert</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Convention / Exhibition</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Festival / Carnival</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Markets</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Pop-up</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Installation</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Online Event</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Show</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Tournament</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Marathon / Run</a>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-primary rounded-pill event-type-filter">Seminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row g-3 mb-5">
+    <div class="col-md-1">
+        <span class="fs-4">Date:</span>
+    </div>
+
+    <div class="col-auto">
+        <a class="btn btn-primary rounded-pill event-type-filter">All dates</a>
+    </div>
+    <div class="col-auto">
+        <input type="date" class="btn btn-outline-primary rounded-pill event-type-filter"/>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-primary rounded-pill event-type-filter">Today</a>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-primary rounded-pill event-type-filter">This weekend</a>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-primary rounded-pill event-type-filter">Next 7 days</a>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-primary rounded-pill event-type-filter">Next 30 days</a>
+    </div>
+
+    <div class="col-auto ms-auto">
+        <div class="mb-3 row">
+            <label for="sort-select" class="col-sm-auto col-form-label">Sort</label>
+            <div class="col-sm-auto">
+                <select class="form-select mb-3 rounded-pill" id="sort-select" aria-label=".form-select-lg example">
+                    <option selected>Recently added first</option>
+                    <option value="1">Most viewed first</option>
+                    <option value="2">Cheapest first</option>
+                    <option value="3">Ending soonest</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-5 row-cols-3">
+    <div class="col">
+        <div class="card events-card" style="">
+            <a href="/event/details" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="../img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card events-card" style="">
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="../img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card events-card" style="">
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="../img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card events-card" style="">
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="../img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card events-card" style="">
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="../img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-2 col-4 mx-auto mt-5">
+    <a class="btn btn-outline-primary btn-lg">See More <i class="fas fa-chevron-down"></i></a>
+</div>
+
+<div class="border border-2 rounded p-5 mt-5">
+    <div class="row">
+        <div class="col-md-1">
+            <i class="fad fa-file-signature fa-4x theme-ravenclaw"></i>
+        </div>
+        <div class="col-md-9">
+            <h2 class="fw-bold mb-0"> Are you an event organizer?</h2>
+            <span class="text-muted fw-normal fs-4">Submit your listings today! Sign up with us!</span>
+        </div>
+        <div class="col-md-2 d-flex align-items-center justify-content-center">
+            <a class="btn btn-primary btn-lg fw-bold"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </div>
+    </div>
+</div>
