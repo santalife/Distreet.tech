@@ -7,6 +7,30 @@ const port = 3000;
 //Loads the handlebars module
 const handlebars = require('express-handlebars');
 
+//Database stuff
+const distreetDB = require('./config/DBConnection');
+distreetDB.setUpDB(true); // To set up database with new tables set (true)
+const MySQLStore = require('express-mysql-session');
+const db = require('./config/db'); // db.js config file
+
+
+//Extra Modules
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+
+// Body parser middleware to parse HTTP body in order to read HTTP data
+app.use(bodyParser.urlencoded({
+	extended: false
+}));
+app.use(bodyParser.json());
+
+// Method override middleware to use other HTTP methods such as PUT and DELETE
+app.use(methodOverride('_method'));
+
+// Enables session to be stored using browser's Cookie ID
+app.use(cookieParser());
+
 //Routes
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
