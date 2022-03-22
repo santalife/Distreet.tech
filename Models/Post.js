@@ -10,7 +10,7 @@ const Post = db.define('post', {
     postcontent: {
         type: Sequelize.STRING
     },
-    lastuupdated: {
+    lastupdated: {
         type: Sequelize.DATE
     },
     postedon: {

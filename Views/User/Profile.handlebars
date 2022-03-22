@@ -64,10 +64,10 @@
                                 <img src="../img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle">
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <form method="post">
+                                <form method="post" action="/user/profile/post/standard">
                                     <input type="text" class="form-control rounded-pill"
-                                        placeholder="What's on your mind?" asp-for="Input.PostContent" />
-                                    <input type="hidden" value="Standard" asp-for="Input.PostType" />
+                                        placeholder="What's on your mind?" name="postcontent"/>
+                                    <input type="hidden" value="Standard" name="posttype"/>
                                     <input type="submit" hidden />
                                 </form>
                             </div>

@@ -9,7 +9,7 @@ const handlebars = require('express-handlebars');
 
 //Database stuff
 const distreetDB = require('./config/DBConnection');
-distreetDB.setUpDB(true); // To set up database with new tables set (true)
+distreetDB.setUpDB(false); // To set up database with new tables set (true)
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
 
