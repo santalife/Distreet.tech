@@ -7,29 +7,41 @@ const User = db.define('user', {
     fullname: {
         type: Sequelize.STRING
     },
-    dateofbirth: {
-        type: Sequelize.DATEONLY
-    },
     email: {
         type: Sequelize.STRING
     },
-    nric: {
+    addressstreet: {
         type: Sequelize.STRING
+    },
+    blocknumber: {
+        type: Sequelize.INTEGER
+    },
+    unitnumber: {
+        type: Sequelize.INTEGER
+    },
+    postalcode: {
+        type: Sequelize.INTEGER
     },
     phonenumber:{
         type: Sequelize.STRING
     },
+    dateofbirth: {
+        type: Sequelize.DATEONLY
+    },
+    nric: {
+        type: Sequelize.STRING
+    },
     password: {
         type: Sequelize.STRING
+    },
+    profilepicture:{
+        type: Sequelize.BLOB
     },
     verified: {
         type: Sequelize.BOOLEAN
     },
     role:{
         type: Sequelize.STRING
-    },
-    profilepicture:{
-        type: Sequelize.BLOB
     },
 });
 

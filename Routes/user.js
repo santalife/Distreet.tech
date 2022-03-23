@@ -4,14 +4,12 @@ const moment = require('moment');
 const mysql = require('mysql');
 const Post = require('../models/Post');
 const { Op } = require("sequelize");
-
+const { register } = require("../services/user")
 router.get('/profile', (req, res) => {
     res.render('User/Profile');
 });
 
 router.post('/profile/post/standard', (req, res) => {
-    console.log(req.body.postcontent);
-    console.log(req.body.posttype);
     Post.create({
         posttype : req.body.posttype,
         postcontent : req.body.postcontent,
