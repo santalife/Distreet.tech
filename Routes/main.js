@@ -8,20 +8,20 @@ const passport = require('passport');
 
 
 router.get('/', (req, res) => {
-    res.render('Main/index', {layout:'HomeLayout'})
+    res.render('Main/index', {layout:'HomeLayout'});
 });
 
 router.get('/register', ensureAnnonymous, (req, res) => {
-    res.render('Main/register')
+    res.render('Main/register');
 });
 
 router.post('/register', ensureAnnonymous, (req, res) => {
-    register(req)
-    res.redirect('/login')
+    register(req, res);
+    res.json("success");
 });
 
 router.get('/login', ensureAnnonymous, (req, res) => {
-    res.render('Main/login', {layout:'LoginLayout'})
+    res.render('Main/login', {layout:'LoginLayout'});
 });
 
 router.post('/login', ensureAnnonymous, (req, res, next) => {

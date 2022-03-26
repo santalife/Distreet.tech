@@ -2,8 +2,8 @@ const mySQLDB = require('./DBConfig');
 const user = require('../models/User');
 const post = require('../models/Post');
 const event = require('../models/Event');
-const PostImage = require('../Models/PostImage');
-const PostLike = require('../Models/PostLike');
+// const postimage = require('../Models/PostImage');
+const postlike = require('../Models/PostLike');
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
@@ -14,9 +14,9 @@ const setUpDB = (drop) => {
 
         user.hasMany(post);
         user.hasMany(event);
-        post.hasMany(PostImage);
-        post.hasMany(PostLike);
-        user.hasMany(PostLike);
+        // post.hasMany(postimage);
+        post.hasMany(postlike);
+        user.hasMany(postlike);
 
         mySQLDB.sync({ // Creates table if none exists
             force: drop

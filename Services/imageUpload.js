@@ -6,14 +6,14 @@ const storage = multer.diskStorage({
         callback(null, './public/upload/');
     },
     filename: (req, file, callback) => {
-        callback(null, Date.now() + path.extname(file.originalname));
+        callback(null, file.originalname);
     }
 });
 // Initialise Upload
 const upload = multer({
     storage: storage,
     limits: {
-        fileSize: 1000000
+        fileSize: 1000000000
     },
     fileFilter: (req, file, callback) => {
         checkFileType(file, callback);

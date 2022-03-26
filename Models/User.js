@@ -35,7 +35,7 @@ const User = db.define('user', {
         type: Sequelize.STRING
     },
     profilepicture:{
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
     },
     verified: {
         type: Sequelize.BOOLEAN

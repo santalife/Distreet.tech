@@ -15,6 +15,7 @@ const db = require('./config/db'); // db.js config file
 
 //Loads the handlebars module
 const handlebars = require('express-handlebars');
+var helpers = require('handlebars-helpers')();
 
 //Extra Modules
 const cookieParser = require('cookie-parser');
@@ -78,10 +79,10 @@ app.use(passport.session());
 
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({
-    key: 'distreet_session',
-    secret: 'teertsid',
-    resave: false,
-    saveUninitialized: false,
+	key: 'distreet_session',
+	secret: 'teertsid',
+	resave: false,
+	saveUninitialized: false,
 }));
 
 app.use(function(req, res, next){
@@ -103,6 +104,7 @@ app.engine('handlebars', handlebars.engine({
     extname: 'hbs',
     //new configuration parameter
     defaultLayout: 'Layout',
+	helpers: helpers
 }));
 
 

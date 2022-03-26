@@ -4,15 +4,19 @@ const moment = require('moment');
 const mysql = require('mysql');
 const Post = require('../models/Post');
 const { Op } = require("sequelize");
-const { register } = require("../services/user")
+const { register, getImagesFromPostId, getUserByFullName } = require("../services/user")
 const { authUser, authNotUser, authRole, ensureAuthenticated } = require("../services/auth");
 const upload = require('../Services/imageUpload');
+const PostImage = require('../Models/PostImage');
 
-router.get('/profile', ensureAuthenticated, (req, res) => {
-    res.render('User/Profile');
+
+router.get('/profile/:fullname', ensureAuthenticated, async function (req, res) {
+    let posts = await getImagesFromPostId(req);
+    let profileuser = await getUserByFullName(req.params.fullname)
+    res.render('User/Profile', { posts, profileuser });
 });
 
-router.post('/profile/post/standard', ensureAuthenticated, (req, res) => {
+router.post('/profile/:fullname/post/standard', ensureAuthenticated, (req, res) => {
     Post.create({
         posttype : req.body.posttype,
         postcontent : req.body.postcontent,
@@ -23,27 +27,37 @@ router.post('/profile/post/standard', ensureAuthenticated, (req, res) => {
     res.redirect('/user/profile');
 });
 
-router.post('/profile/post/photo&video', ensureAuthenticated, (req, res) => {
+router.post('/profile/post/photo&video', ensureAuthenticated, async function (req, res) {
     console.log("Uploading...");
-    upload(req, res, (err) => {
+    upload(req, res, async function  (err) {
         if (err) {
             console.log(err);
         } else {
             console.log(req.body.postcontent);
             console.log(req.files);
+
+            let post = await Post.create({
+                posttype : req.body.posttype,
+                postcontent : req.body.postcontent,
+                lastupdated : moment(),
+                postedon : moment(),
+                userId : req.user.id
+            });
+        
+            const postId = post.id
+            
+            for(var i=0; i<req.files.length; i++){
+                console.log(req.files[i].filename);
+                PostImage.create({      
+                    imagepath : "/upload/" + req.files[i].filename,      
+                    postId                
+                });
+            }
+
             res.json("success")
         }
     });
-    // Post.create({
-    //     posttype : req.body.posttype,
-    //     postcontent : req.body.postcontent,
-    //     lastupdated : moment(),
-    //     postedon : moment(),
-    //     userId : req.user.id
-    // });
     
-    // res.redirect('/user/profile');
-    // res.redirect('/user/profile');
 });
 
 

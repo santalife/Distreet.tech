@@ -1,12 +1,12 @@
 <div class="container w-75">
-    <form method="post">
+    <form method="post" id="registration-form">
         <div class="row g-3">
             <h2 class="fw-bolder"><i class="fas fa-user-circle"></i> Personal Details</h2>
             <p class="mt-0 mb-2">Enter the all the compulsory fields here to apply for an account on Distreet</p>
             <div asp-validation-summary="All"></div>
             <div class="col-md-12">
                 <label for="input-profile-picture" class="form-label fw-bold">Profile Picture</label>
-                <input type="file" id="input-profile-picture" class="filepond" asp-for="Input.ProfilePictureJson">
+                <input type="file" id="input-profile-picture" class="filepond" name="profilepicture">
             </div>
             
             <div class="col-md-6">
@@ -142,4 +142,29 @@
         allowImageTransform: true,
         imageCropAspectRatio: '1:1',
     });
+
+    $(function () {
+        $("#registration-form").submit(function (e) {
+            e.preventDefault();
+            var imagefiles = profilepicturePond.getFiles();
+            var formdata = new FormData(this);
+
+            for (var i = 0; i < imagefiles.length; i++) {
+                formdata.append("images", imagefiles[i].file);
+            }
+            for (var pair of formdata.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            $.ajax({
+                url: "/register",
+                type: 'POST',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                'success': (data) => {
+                    top.location.href = '/';
+                }
+            })
+        })
+    })
 </script>

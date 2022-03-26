@@ -1,8 +1,8 @@
 <li class="nav-item d-flex align-items-center me-2">
     <div class="btn btn-outline-secondary border-0 rounded-pill pt-0 pb-0 px-2 pe-3">
-        <a href="/user/profile" class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
-            <img src="../img/yanz.jpg" alt="mdo" width="30" height="30" class="rounded-circle me-2">
-            <span class="navbar-text">Joyboy</span>
+        <a href="/user/profile/{{user.fullname}}" class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
+            <img src="{{user.profilepicture}}" alt="mdo" width="30" height="30" class="rounded-circle me-2">
+            <span class="navbar-text">{{user.fullname}}</span>
         </a>
     </div>
 </li>
