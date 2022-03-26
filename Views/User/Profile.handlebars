@@ -150,11 +150,11 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle">
+                                <img src="{{user.profilepicture}}" class="input-profile-img rounded float-start rounded-circle">
 
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h5 class="posts-username mb-0">joy joy boi</h5>
+                                <h5 class="posts-username mb-0">{{user.fullname}}</h5>
                                 <h6 class="text-muted post-date-header">March 18, 2022</h6>
                             </div>
                         </div>
@@ -184,27 +184,26 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-9 d-flex justify-content-center">
-                                            <img src="/img/yanz.jpg" alt="">
-
+                                    <div class="row h-100">
+                                        <div class="col-md-9 d-flex justify-content-center">                                            
+                                            <img src="{{#withLast postimages}}{{this.imagepath}}{{/withLast}}" style="max-width: 100%; height: auto;" alt="">                                            
                                         </div>
                                         <div class="col-md-3">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0">
-                                                    <img src="/img/yanz.jpg"
+                                                    <img src="{{user.profilepicture}}"
                                                         class="input-profile-img rounded float-start rounded-circle">
 
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h5 class="posts-username mb-0">joy joy boi</h5>
+                                                    <h5 class="posts-username mb-0">{{user.fullname}}</h5>
                                                     <h6 class="text-muted post-date-header">March 20, 2022</h6>
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col">
                                                     <p class="mb-0 fs-4">
-                                                        Fifth Picture Post
+                                                        {{postcontent}}
                                                     </p>
                                                 </div>
                                             </div>

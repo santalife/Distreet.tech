@@ -4,7 +4,7 @@ const express = require('express');
 const passport = require('passport');
 const User = require('../models/User');
 const Post = require('../models/Post');
-const PostImage = require('../models/PostImage');
+const PostFile = require('../Models/PostFile');
 const upload = require('../Services/imageUpload');
 
 var bcrypt = require('bcryptjs');
@@ -64,11 +64,10 @@ async function getImagesFromPostId(req){
         order: [['postedon', 'DESC']],
         raw: true
     })    
-    console.log(posts);
-    for(var i=0 ; i<posts.length; i++ ){
-        // posts[i].user = await getUserById(posts[i].userId);
+    for(var i=0 ; i < posts.length; i++ ){
+        posts[i].user = await getUserById(posts[i].userId);
         if(posts[i].posttype == "Photos/Videos"){
-            posts[i].postimages = await PostImage.findAll({
+            posts[i].postimages = await PostFile.findAll({
                 where: {
                     postId: posts[i].id
                 },

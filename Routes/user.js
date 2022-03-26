@@ -3,11 +3,10 @@ const router = express.Router();
 const moment = require('moment');
 const mysql = require('mysql');
 const Post = require('../models/Post');
-const { Op } = require("sequelize");
 const { register, getImagesFromPostId, getUserByFullName } = require("../services/user")
 const { authUser, authNotUser, authRole, ensureAuthenticated } = require("../services/auth");
 const upload = require('../Services/imageUpload');
-const PostImage = require('../Models/PostImage');
+const PostFile = require('../Models/PostFile');
 
 
 router.get('/profile/:fullname', ensureAuthenticated, async function (req, res) {
@@ -24,7 +23,7 @@ router.post('/profile/:fullname/post/standard', ensureAuthenticated, (req, res) 
         postedon : moment(),
         userId : req.user.id
     });
-    res.redirect('/user/profile');
+    res.redirect('/user/profile/'+req.params.fullname);
 });
 
 router.post('/profile/post/photo&video', ensureAuthenticated, async function (req, res) {
@@ -42,17 +41,14 @@ router.post('/profile/post/photo&video', ensureAuthenticated, async function (re
                 lastupdated : moment(),
                 postedon : moment(),
                 userId : req.user.id
-            });
-        
-            const postId = post.id
-            
-            for(var i=0; i<req.files.length; i++){
-                console.log(req.files[i].filename);
-                PostImage.create({      
-                    imagepath : "/upload/" + req.files[i].filename,      
+            });        
+            const postId = post.id        
+            req.files.forEach(image => {                
+                PostFile.create({      
+                    imagepath : "/upload/" + image.filename,      
                     postId                
                 });
-            }
+            });
 
             res.json("success")
         }
