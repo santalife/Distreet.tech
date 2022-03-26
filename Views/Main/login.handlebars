@@ -4,13 +4,13 @@
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-                asp-for="Input.ResidentId">
-            <label for="floatingInput">Resident Id</label>
+            <input type="text" class="form-control" id="floatingInput" placeholder="Joyboy"
+                name="fullname">
+            <label for="floatingInput">Full Name</label>
         </div>
         <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                asp-for="Input.Password">
+                name="password">
             <label for="floatingPassword">Password</label>
         </div>
         <div class="checkbox mb-3">
@@ -25,6 +25,5 @@
             <p class="d-inline-block mb-1 fst-italic">Local resident with no account?</p>
             <a class="btn btn-secondary" href="/Register">Apply Here <i class="fas fa-chevron-right"></i></a>
         </div>
-
     </form>
 </main>

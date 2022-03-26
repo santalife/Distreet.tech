@@ -1,5 +1,5 @@
 function authUser(req,res,next){
-    if(req.user ==null){
+    if(req.user == null){
         res.status(403)
         return res.redirect('/login')
     }
@@ -37,4 +37,13 @@ const ensureAuthenticated = (req, res, next) => {
     res.redirect('/');
 };
 
-module.exports= {authUser, authNotUser, authRole, ensureAuthenticated}
+const ensureAnnonymous = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        // If user is not authenticated 
+        return next(); // Calling next() to proceed to the next statement 
+    }
+    // If authenticated, show alert message and redirect to ‘/’ 
+    res.redirect('/');
+};
+
+module.exports= { authUser, authNotUser, authRole, ensureAuthenticated, ensureAnnonymous }

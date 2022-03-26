@@ -2,6 +2,8 @@ const mySQLDB = require('./DBConfig');
 const user = require('../models/User');
 const post = require('../models/Post');
 const event = require('../models/Event');
+const PostImage = require('../Models/PostImage');
+const PostLike = require('../Models/PostLike');
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
@@ -9,13 +11,13 @@ const setUpDB = (drop) => {
             console.log('Distreet database connected');
         })
         .then(() => {
-/*
-Defines the relationship where a user has many videos.
-In this case the primary key from user will be a foreign key
-in video.
-*/
+
         user.hasMany(post);
         user.hasMany(event);
+        post.hasMany(PostImage);
+        post.hasMany(PostLike);
+        user.hasMany(PostLike);
+
         mySQLDB.sync({ // Creates table if none exists
             force: drop
         }).then(() => {

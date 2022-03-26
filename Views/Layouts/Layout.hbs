@@ -20,11 +20,12 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-    <link rel="stylesheet" href="./lib/filepond-master/dist/filepond.css" />
+    <link rel="stylesheet" href="../lib/filepond-master/dist/filepond.css" />
     <script src="../lib/filepond-master/dist/filepond.js"></script>
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet" />
 
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
 </head>
 <header>
     {{> _Topbar}}
@@ -40,11 +41,10 @@
 
     <script src="../lib/popperjs/core/dist/umd/popper.min.js"></script>
     <script src="../lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="../lib/jquery/dist/jquery.min.js"></script>
     <script src="../js/site.js" asp-append-version="true"></script>
 
     <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-second-toggle="tooltip"]'))
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })

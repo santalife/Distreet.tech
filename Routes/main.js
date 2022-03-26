@@ -1,31 +1,41 @@
 const express = require('express');
 const router = express.Router();
 const { register } = require('../Services/user')
+const { ensureAnnonymous, ensureAuthenticated } = require('../Services/auth')
+
+//Login Module
+const passport = require('passport');
+
 
 router.get('/', (req, res) => {
     res.render('Main/index', {layout:'HomeLayout'})
 });
 
-router.get('/login', (req, res) => {
-    res.render('Main/login', {layout:'LoginLayout'})
-});
-
-router.get('/register', (req, res) => {
+router.get('/register', ensureAnnonymous, (req, res) => {
     res.render('Main/register')
 });
 
-router.post('/register', (req, res) => {
-    // let { fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password } = req.body;
-
-    // bcrypt.genSalt(10, function(err, salt) {
-    //     bcrypt.hash(password, salt, function(err, hash) {
-    //         User.create({
-    //             fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password: hash
-    //         });
-    //     });
-    // });
+router.post('/register', ensureAnnonymous, (req, res) => {
     register(req)
-    res.redirect('/')
+    res.redirect('/login')
 });
+
+router.get('/login', ensureAnnonymous, (req, res) => {
+    res.render('Main/login', {layout:'LoginLayout'})
+});
+
+router.post('/login', ensureAnnonymous, (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/login',
+    })(req, res, next);
+});
+
+router.post('/logout', ensureAuthenticated, (req, res) => {
+    req.logout();
+	res.redirect('/');
+});
+
+
 
 module.exports = router;

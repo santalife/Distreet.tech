@@ -17,4 +17,8 @@ function register(req){
     });
 };
 
+function login(req){
+    
+}
+
 module.exports = { register };

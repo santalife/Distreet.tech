@@ -1,17 +1,17 @@
 <li class="nav-item d-flex align-items-center me-2">
     <div class="btn btn-outline-secondary border-0 rounded-pill pt-0 pb-0 px-2 pe-3">
-        <a asp-area="Identity" asp-page="/Account/Profile" asp-route-residentId="@user.UserName"
-            class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
-            <img src="@user.ProfilePicture" alt="mdo" width="30" height="30" class="rounded-circle me-2">
-            <span class="navbar-text">@user.FullName</span>
+        <a href="/user/profile" class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
+            <img src="../img/yanz.jpg" alt="mdo" width="30" height="30" class="rounded-circle me-2">
+            <span class="navbar-text">Joyboy</span>
         </a>
     </div>
 </li>
 <li class="nav-item d-flex align-items-center">
     <div class="dropdown">
-        <a class="btn btn-secondary navbar-text rounded-pill fa-lg" data-second-toggle="tooltip"
-            data-bs-placement="bottom" data-bs-toggle="dropdown" title="Account">
-            <i class="fas fa-caret-down"></i>
+        <a class="btn btn-secondary navbar-text rounded-pill fa-lg" data-bs-toggle="dropdown" >
+            <span class="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account">
+                <i class="fas fa-caret-down"></i>
+            </span>
         </a>
         <ul class="dropdown-menu p-2 shadow-sm" aria-labelledby="dropdownMenuLink">
             <li>
@@ -19,8 +19,7 @@
                         class="fas fa-cog fa-fw fa-lg me-2"></i> Settings & Privacy</a>
             </li>
             <li>
-                <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page(" /",
-                    new { area="" })">
+                <form method="post" action="/logout">
                     <button type="submit" class="dropdown-item d-flex align-items-center rounded ps-2 navbar-text"
                         href="#"><i class="fas fa-sign-out-alt fa-fw fa-lg me-2"></i> Logout</button>
                 </form>

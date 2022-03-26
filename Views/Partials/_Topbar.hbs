@@ -52,7 +52,12 @@
                 <li class="nav-item">
                     <button type="button" class="btn btn-secondary navbar-text me-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"><i class="fas fa-map"></i> Map</button>
                 </li>
-                {{> _AnonymousPartial}}
+                {{#if user}}
+                    {{> _LoggedInPartial}}
+                {{else}}
+                    {{> _AnonymousPartial}}
+                {{/if}}
+                
             </ul>
         </div>
 
