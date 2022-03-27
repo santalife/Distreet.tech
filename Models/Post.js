@@ -13,7 +13,7 @@ const Post = db.define('post', {
     lastupdated: {
         type: Sequelize.DATE
     },
-    postedon: {
+    dateposted: {
         type: Sequelize.DATE
     },
 });

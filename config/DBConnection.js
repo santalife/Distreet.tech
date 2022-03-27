@@ -14,9 +14,10 @@ const setUpDB = (drop) => {
         .then(() => {
 
         user.hasMany(post);
+        user.hasMany(post, {foreignKey: 'postedon'});
         user.hasMany(event);
         user.hasMany(item);
-        post.hasMany(postfile)
+        post.hasMany(postfile);    
         post.hasMany(postlike);
         user.hasMany(postlike);
 

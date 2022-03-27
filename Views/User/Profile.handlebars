@@ -150,11 +150,10 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="{{user.profilepicture}}" class="input-profile-img rounded float-start rounded-circle">
-
+                                <img src="{{postedby.profilepicture}}" class="input-profile-img rounded float-start rounded-circle">
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h5 class="posts-username mb-0">{{user.fullname}}</h5>
+                                <h5 class="posts-username mb-0">{{postedby.fullname}}</h5>
                                 <h6 class="text-muted post-date-header">March 18, 2022</h6>
                             </div>
                         </div>
@@ -169,13 +168,14 @@
                     </div>
 
                     {{#eq posttype "Photos/Videos"}}
-                    <a href="" data-bs-toggle="modal" data-bs-target="#post-modal-1">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#post-modal-{{id}}">
                         <img src="{{#withLast postimages}}{{this.imagepath}}{{/withLast}}" class="w-100" />
 
                         {{!-- <img src="{{#withLast postimages}}{{this.imagepath}}{{/withLast}}" class="w-100" /> --}}
                     </a>
+                    
                     {{!-- MODAL SECTION --}}
-                    <div class="modal fade" id="post-modal-1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    <div class="modal fade" id="post-modal-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
                             <div class="modal-content">
@@ -183,10 +183,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body pb-0">
                                     <div class="row h-100">
-                                        <div class="col-md-9 d-flex justify-content-center">                                            
-                                            <img src="{{#withLast postimages}}{{this.imagepath}}{{/withLast}}" style="max-width: 100%; height: auto;" alt="">                                            
+                                        <div class="col-md-9 d-flex justify-content-center mb-4 mb-sm-0">                                            
+                                            <img src="{{#withLast postimages}}{{this.imagepath}}{{/withLast}}" alt="">                                            
                                         </div>
                                         <div class="col-md-3">
                                             <div class="d-flex">
@@ -247,7 +247,7 @@
                                                 </div>
                                                 <div class="flex-grow-1 ms-4">
                                                     <div class="row gy-2">
-                                                        <div class="col-md-auto ps-1">
+                                                        <div class="col-auto ps-1">
                                                             <div
                                                                 class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
                                                                 <div class="col-md-auto ps-0">
@@ -274,7 +274,7 @@
                                                 </div>
                                                 <div class="flex-grow-1 ms-4">
                                                     <div class="row gy-2">
-                                                        <div class="col-md-auto ps-1">
+                                                        <div class="col-auto ps-1">
                                                             <div
                                                                 class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
                                                                 <div class="col-md-auto ps-0">
@@ -311,8 +311,9 @@
                             <div class="post-btn-section">
                                 <ul class="nav nav-pills nav-justified">
                                     <li class="nav-item">
-                                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page"
-                                            href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                                        <form method="post" action="/user/profile/{{../profileuser.fullname}}/{{id}}">
+                                        <button class="btn btn-outline-danger w-100 border-0 fw-bold" type="submit"><i class="fas fa-thumbs-up"></i> Like</a>
+                                        </form>
                                     </li>
                                     <li class="nav-item">
                                         <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i
@@ -331,7 +332,7 @@
                             <div class="row">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0">
-                                        <img src="/img/yanz.jpg"
+                                        <img src="{{../user.profilepicture }}"
                                             class="input-profile-img rounded float-start rounded-circle">
                                     </div>
                                     <div class="flex-grow-1 ms-3">
@@ -351,7 +352,7 @@
                                     </div>
                                     <div class="flex-grow-1 ms-4">
                                         <div class="row gy-2">
-                                            <div class="col-md-auto ps-1">
+                                            <div class="col-auto ps-1">
                                                 <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
                                                     <div class="col-md-auto ps-0">
                                                         <h6 class="mb-0">
@@ -377,7 +378,7 @@
                                     </div>
                                     <div class="flex-grow-1 ms-4">
                                         <div class="row gy-2">
-                                            <div class="col-md-auto ps-1">
+                                            <div class="col-auto ps-1">
                                                 <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
                                                     <div class="col-md-auto ps-0">
                                                         <h6 class="mb-0">
