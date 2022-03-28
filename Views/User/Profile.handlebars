@@ -129,6 +129,7 @@
                                             placeholder="What's on your mind?" id="postcontent"
                                             name="postcontent"></textarea>
                                         <input type="hidden" value="Photos/Videos" id="posttype" name="posttype" />
+                                        <input type="hidden" value="{{profileuser.fullname}}" id="fullname" name="fullname" />
                                     </div>
                                     <div class="col-md-12">
                                         <input type="file" id="input-files" class="filepond" name="images">
@@ -191,12 +192,12 @@
                                         <div class="col-md-3">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0">
-                                                    <img src="{{user.profilepicture}}"
+                                                    <img src="{{postedby.profilepicture}}"
                                                         class="input-profile-img rounded float-start rounded-circle">
 
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <h5 class="posts-username mb-0">{{user.fullname}}</h5>
+                                                    <h5 class="posts-username mb-0">{{postedby.fullname}}</h5>
                                                     <h6 class="text-muted post-date-header">March 20, 2022</h6>
                                                 </div>
                                             </div>
@@ -312,7 +313,7 @@
                                 <ul class="nav nav-pills nav-justified">
                                     <li class="nav-item">
                                         <form method="post" action="/user/profile/{{../profileuser.fullname}}/{{id}}">
-                                        <button class="btn btn-outline-danger w-100 border-0 fw-bold" type="submit"><i class="fas fa-thumbs-up"></i> Like</a>
+                                            <button class="btn btn-outline-danger w-100 border-0 fw-bold" type="submit"><i class="fas fa-thumbs-up"></i> Like</a>
                                         </form>
                                     </li>
                                     <li class="nav-item">
@@ -714,8 +715,10 @@
                 e.preventDefault();
                 var imagefiles = filesPond.getFiles();
                 var formdata = new FormData();
+                formdata.append("fullname", $("#fullname").val())
                 formdata.append("postcontent", $("#postcontent").val())
                 formdata.append("posttype", $("#posttype").val())
+
                 for (var i = 0; i < imagefiles.length; i++) {
                     formdata.append("images", imagefiles[i].file)
                 }
@@ -732,6 +735,7 @@
                         $('#picture-upload')[0].reset();
                         filesPond.removeFiles();
                         $('#imagesModal').modal('hide');
+                        setInterval('location.reload()', 100);
                     }
                 })
             })

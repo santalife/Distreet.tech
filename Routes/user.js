@@ -11,7 +11,7 @@ const PostLike = require('../Models/PostLike');
 const { raw } = require('handlebars-helpers/lib/string');
 
 
-router.get('/profile/:fullname', ensureAuthenticated, async function (req, res) {
+router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
     let posts = await getImagesFromPostId(req);
     let profileuser = await getUserByFullName(req.params.fullname)
     res.render('User/Profile', { posts, profileuser });
@@ -48,15 +48,14 @@ router.post('/profile/post/photo&video', ensureAuthenticated, async function (re
         if (err) {
             console.log(err);
         } else {
-            console.log(req.body.postcontent);
-            console.log(req.files);
-
+            let profileuser = await getUserByFullName(req.body.fullname)
             let post = await Post.create({
                 posttype : req.body.posttype,
                 postcontent : req.body.postcontent,
                 lastupdated : moment(),
-                postedon : moment(),
-                userId : req.user.id
+                dateposted : moment(),                
+                userId : req.user.id,
+                postedon : profileuser.id
             });        
             const postId = post.id        
             req.files.forEach(image => {                
