@@ -28,6 +28,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const adminRoute = require('./routes/admin');
 const eventRoute = require('./Routes/event');
+const shopRoute = require('./routes/shop');
 
 //Creates our express server
 const app = express();
@@ -95,6 +96,7 @@ app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/admin', adminRoute);
 app.use('/event', eventRoute);
+app.use('/shop', shopRoute);
 
 
 //Sets our app to use the handlebars engine

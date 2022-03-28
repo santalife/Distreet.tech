@@ -54,14 +54,16 @@ async function getUserByFullName(fullname){
 
 async function getImagesFromPostId(req){
     let user = await getUserByFullName(req.params.fullname);
-    console.log(req.user)
+    console.log(req.user);
+
     let posts = await Post.findAll({
         where: {
             userId: user.id
         },
         order: [['postedon', 'DESC']],
         raw: true
-    })    
+    });
+    
     for(var i=0 ; i < posts.length; i++ ){
         posts[i].user = await getUserById(posts[i].userId);
         if(posts[i].posttype == "Photos/Videos"){
