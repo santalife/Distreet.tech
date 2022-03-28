@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment');
 
 //Login / Register Modules
 const passport = require('passport');
@@ -60,12 +61,12 @@ async function getImagesFromPostId(req){
         where: {
             userId: user.id
         },
-        order: [['postedon', 'DESC']],
+        order: [['dateposted', 'DESC']],
         raw: true
     });
     
     for(var i=0 ; i < posts.length; i++ ){
-        posts[i].user = await getUserById(posts[i].userId);
+        posts[i].postedby = await getUserById(posts[i].userId);
         if(posts[i].posttype == "Photos/Videos"){
             posts[i].postimages = await PostFile.findAll({
                 where: {
@@ -80,5 +81,16 @@ async function getImagesFromPostId(req){
 
     return posts
 }
-
-module.exports = { register, getImagesFromPostId, getUserByFullName };
+async function standardPost(req){
+    let profileuser = await getUserByFullName(req.params.fullname);
+    console.log('posted on' + profileuser.id);
+    Post.create({
+        posttype : req.body.posttype,
+        postcontent : req.body.postcontent,
+        lastupdated : moment(),
+        dateposted : moment(),
+        postedon : profileuser.id,
+        userId : req.user.id
+    });
+};
+module.exports = { register, getImagesFromPostId, getUserByFullName, standardPost };
