@@ -11,6 +11,10 @@ router.get('/', (req, res) => {
     res.render('Main/index', {layout:'HomeLayout'});
 });
 
+router.get('/profile/:fullname', (req, res) => {
+    res.redirect('/user/profile/' + req.params.fullname)
+})
+
 router.get('/register', ensureAnnonymous, (req, res) => {
     res.render('Main/register');
 });
