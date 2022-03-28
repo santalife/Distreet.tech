@@ -26,8 +26,6 @@ function register(req, res){
             });            
         }
     });
-
-
 };
 
 function login(req){

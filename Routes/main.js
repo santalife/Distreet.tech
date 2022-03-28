@@ -8,8 +8,20 @@ const passport = require('passport');
 
 
 router.get('/', (req, res) => {
-    res.render('Main/index', {layout:'HomeLayout'});
+    let items = [];
+    items.push('chair', 'table', 'sofa');
+    let dict = {};
+    dict['item'] = items;
+    let names = [];
+    names.push('abc', 'def', 'ghi');
+    dict['name'] = names;
+    console.log(dict);
+    res.render('Main/index', {layout:'HomeLayout', items, dict});
 });
+
+router.get('/profile/:fullname', (req, res) => {
+    res.redirect('/user/profile/' + req.params.fullname)
+})
 
 router.get('/register', ensureAnnonymous, (req, res) => {
     res.render('Main/register');
