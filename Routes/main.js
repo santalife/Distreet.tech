@@ -8,15 +8,7 @@ const passport = require('passport');
 
 
 router.get('/', (req, res) => {
-    let items = [];
-    items.push('chair', 'table', 'sofa');
-    let dict = {};
-    dict['item'] = items;
-    let names = [];
-    names.push('abc', 'def', 'ghi');
-    dict['name'] = names;
-    console.log(dict);
-    res.render('Main/index', {layout:'HomeLayout', items, dict});
+    res.render('Main/index', {layout:'HomeLayout'});
 });
 
 router.get('/profile/:fullname', (req, res) => {
