@@ -8,6 +8,11 @@ const passport = require('passport');
 
 
 router.get('/', (req, res) => {
+    if(req.user){
+        if(req.user.role == "admin"){
+            res.redirect('/admin');
+        }
+    }
     res.render('Main/index', {layout:'HomeLayout'});
 });
 
@@ -32,7 +37,8 @@ router.post('/login', ensureAnnonymous, (req, res, next) => {
 });
 
 router.post('/logout', ensureAuthenticated, (req, res) => {
-    req.logout();
+    req.app.locals.layout = 'Layout'; // set your layout here    
+    req.logout();    
 	res.redirect('/');
 });
 

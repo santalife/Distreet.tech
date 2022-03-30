@@ -18,7 +18,9 @@ router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async fu
 });
 
 //Like Feature
-router.post('/profile/:fullname/:postId', ensureAuthenticated, async function (req, res) {
+router.post('/profile/:fullname/like/:postId', ensureAuthenticated, async function (req, res) {
+
+    console.log('iam here');
 
     await PostLike.create({
         userId : req.user.id,

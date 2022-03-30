@@ -1,6 +1,7 @@
 //Loads the express module
 const express = require('express');
 const session = require('express-session');
+const { authRole, ensureAuthenticated } = require('./services/auth');
 
 //Passport Modules
 const passport = require('passport');
@@ -93,8 +94,8 @@ app.use(function(req, res, next){
 });
 
 app.use('/', mainRoute);
-app.use('/user', userRoute);
-app.use('/admin', adminRoute);
+app.use('/user', ensureAuthenticated, authRole('user'), userRoute);
+app.use('/admin', ensureAuthenticated, authRole('admin') ,adminRoute);
 app.use('/event', eventRoute);
 app.use('/shop', shopRoute);
 
