@@ -741,4 +741,28 @@
             })
         })
 
+        $(function () {
+            $("#like-form").submit(function (e) {
+                e.preventDefault();
+                console.log()
+                var imagefiles = filesPond.getFiles();
+
+                for (var i = 0; i < imagefiles.length; i++) {
+                    formdata.append("images", imagefiles[i].file)
+                }
+                for (var pair of formdata.entries()) {
+                    console.log(pair[0] + ', ' + pair[1]);
+                }
+                $.ajax({
+                    url: "/user/profile/post/photo&video",
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    'success': (data) => {
+                        setInterval('location.reload()', 100);
+                    }
+                })
+            })
+        })
+
     </script>
