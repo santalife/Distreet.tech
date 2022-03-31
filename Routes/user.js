@@ -16,8 +16,14 @@ router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async fu
 
     for(var i = 0 ; i < posts.length ; i++){
         posts[i].likes = await getLikesFromPostId(posts[i].id);
+        posts[i].liked = await PostLike.findOne({
+            where:{
+                postId : posts[i].id,
+                userId : req.user.id
+            },
+            raw: true            
+        });
     };
-    console.log(posts);
 
     let profileuser = await getUserByFullName(req.params.fullname);
 
