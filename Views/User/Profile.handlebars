@@ -312,9 +312,9 @@
                             <div class="post-btn-section">
                                 <ul class="nav nav-pills nav-justified">
                                     <li class="nav-item">
-                                        <form method="post" action="/user/profile/{{../profileuser.fullname}}/like/{{id}}">
-                                            <button class="btn btn-outline-danger w-100 border-0 fw-bold" type="submit"><i class="fas fa-thumbs-up"></i> Like</a>
-                                        </form>
+                                        {{!-- <form method="post" action="/user/profile/{{../profileuser.fullname}}/like/{{id}}"> --}}
+                                            <button class="btn btn-outline-danger w-100 border-0 fw-bold" postId="{{id}}" fullname="{{../profileuser.fullname}}" onclick="Like(this);"><i class="fas fa-thumbs-up"></i> Like</a>
+                                        {{!-- </form> --}}
                                     </li>
                                     <li class="nav-item">
                                         <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i
@@ -696,6 +696,46 @@
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
 
     <script>
+        function Like(d){
+            var postId = $(d).attr("postId");
+            var fullname = $(d).attr("fullname");
+            const url = "/user/profile/"+ fullname +"/like/" + postId ;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                'success': (data) => {
+                    console.log(data);
+                    $(d).removeClass('btn-outline-danger');
+                    $(d).addClass('btn-danger');
+                    $(d).attr('onclick', 'Dislike(this);')
+                    $(d).html('<i class="fas fa-thumbs-up"></i> ' + data);
+                }
+            })
+        };
+
+        function Dislike(d){
+            var postId = $(d).attr("postId");
+            var fullname = $(d).attr("fullname");
+
+            const url = "/user/profile/"+ fullname +"/dislike/" + postId ;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                'success': (data) => {
+                    $(d).removeClass('btn-danger');
+                    $(d).addClass('btn-outline-danger');
+                    $(d).attr('onclick', 'Like(this);')
+                    $(d).html('<i class="fas fa-thumbs-up"></i> Like');
+                }
+            })
+        };
+    </script>    
+
+    <script>
         FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode, FilePondPluginFileMetadata, FilePondPluginImageCrop, FilePondPluginImageTransform);
         const filesElem = document.querySelector('#input-files');
         const filesPond = FilePond.create(filesElem);
@@ -744,15 +784,6 @@
         $(function () {
             $("#like-form").submit(function (e) {
                 e.preventDefault();
-                console.log()
-                var imagefiles = filesPond.getFiles();
-
-                for (var i = 0; i < imagefiles.length; i++) {
-                    formdata.append("images", imagefiles[i].file)
-                }
-                for (var pair of formdata.entries()) {
-                    console.log(pair[0] + ', ' + pair[1]);
-                }
                 $.ajax({
                     url: "/user/profile/post/photo&video",
                     type: 'POST',

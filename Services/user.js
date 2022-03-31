@@ -9,6 +9,7 @@ const PostFile = require('../Models/PostFile');
 const upload = require('../Services/imageUpload');
 
 var bcrypt = require('bcryptjs');
+const PostLike = require('../Models/PostLike');
 
 function register(req, res){
     upload(req, res, async function  (err) {
@@ -53,7 +54,7 @@ async function getUserByFullName(fullname){
     return user;
 }
 
-async function getImagesFromPostId(req){
+async function getAllPosts(req){
     let user = await getUserByFullName(req.params.fullname);
     console.log(req.user);
 
@@ -81,6 +82,18 @@ async function getImagesFromPostId(req){
 
     return posts
 }
+
+async function getLikesFromPostId(postId){
+    let postLikes = await PostLike.findAll({
+        where:{
+            postId
+        },
+        raw: true
+    });
+
+    return postLikes
+};
+
 async function standardPost(req){
     let profileuser = await getUserByFullName(req.params.fullname);
     console.log('posted on' + profileuser.id);
@@ -93,4 +106,4 @@ async function standardPost(req){
         userId : req.user.id
     });
 };
-module.exports = { register, getImagesFromPostId, getUserByFullName, standardPost };
+module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId};

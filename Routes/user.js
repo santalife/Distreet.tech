@@ -3,7 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const mysql = require('mysql');
 const Post = require('../models/Post');
-const { register, getImagesFromPostId, getUserByFullName, standardPost } = require("../services/user")
+const { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId } = require("../services/user")
 const { authUser, authNotUser, authRole, ensureAuthenticated } = require("../services/auth");
 const upload = require('../Services/imageUpload');
 const PostFile = require('../Models/PostFile');
@@ -12,8 +12,15 @@ const { raw } = require('handlebars-helpers/lib/string');
 
 
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
-    let posts = await getImagesFromPostId(req);
-    let profileuser = await getUserByFullName(req.params.fullname)
+    let posts = await getAllPosts(req);
+
+    for(var i = 0 ; i < posts.length ; i++){
+        posts[i].likes = await getLikesFromPostId(posts[i].id);
+    };
+    console.log(posts);
+
+    let profileuser = await getUserByFullName(req.params.fullname);
+
     res.render('User/Profile', { posts, profileuser });
 });
 
@@ -36,7 +43,31 @@ router.post('/profile/:fullname/like/:postId', ensureAuthenticated, async functi
 
     console.log(likeCount);
 
-    res.json({likeCount});
+    res.json(likeCount);
+})
+
+//Dislike Feature
+router.post('/profile/:fullname/dislike/:postId', ensureAuthenticated, async function (req, res) {
+
+    console.log('iam here');
+
+    await PostLike.destroy({
+        where:{
+            userId : req.user.id,
+            postId : req.params.postId
+        }
+    })
+
+    var likeCount = await PostLike.count({
+        where:{
+            postId : req.params.postId
+        },
+        raw: true
+    });
+
+    console.log(likeCount);
+
+    res.json(likeCount);
 })
 
 router.post('/profile/:fullname/post/standard', ensureAuthenticated, (req, res) => {
