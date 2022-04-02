@@ -68,20 +68,6 @@ async function getAllPosts(req){
     
     posts = posts.map((post) => post.get({ plain: true }));
 
-    // for(var i=0 ; i < posts.length; i++ ){
-    //     // posts[i].postedby = await getUserById(posts[i].postedby);
-    //     if(posts[i].posttype == "Photos/Videos"){
-    //         posts[i].postimages = await PostFile.findAll({
-    //             where: {
-    //                 postId: posts[i].id
-    //             },
-    //             order: [['id', 'DESC']],
-    //             raw: true                
-    //         }); 
-    //     };
-    // };
-
-
     return posts
 }
 
