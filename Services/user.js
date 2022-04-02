@@ -16,7 +16,7 @@ function register(req, res){
         if (err) {
             console.log(err);
         } else {
-            console.log(req.files);
+
             let { fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password } = req.body;
             let profilepicture = "/upload/" + req.files[0].filename;            
             bcrypt.genSalt(10, function(err, salt) {
@@ -56,28 +56,30 @@ async function getUserByFullName(fullname){
 
 async function getAllPosts(req){
     let user = await getUserByFullName(req.params.fullname);
-    console.log(req.user);
 
     let posts = await Post.findAll({
         where: {
-            userId: user.id
+            postedOn: user.id,            
         },
         order: [['dateposted', 'DESC']],
-        raw: true
+        include: {all: true, nest: true},
+        nest: true
     });
     
-    for(var i=0 ; i < posts.length; i++ ){
-        posts[i].postedby = await getUserById(posts[i].userId);
-        if(posts[i].posttype == "Photos/Videos"){
-            posts[i].postimages = await PostFile.findAll({
-                where: {
-                    postId: posts[i].id
-                },
-                order: [['id', 'DESC']],
-                raw: true
-            }); 
-        };
-    };
+    posts = posts.map((post) => post.get({ plain: true }));
+
+    // for(var i=0 ; i < posts.length; i++ ){
+    //     // posts[i].postedby = await getUserById(posts[i].postedby);
+    //     if(posts[i].posttype == "Photos/Videos"){
+    //         posts[i].postimages = await PostFile.findAll({
+    //             where: {
+    //                 postId: posts[i].id
+    //             },
+    //             order: [['id', 'DESC']],
+    //             raw: true                
+    //         }); 
+    //     };
+    // };
 
 
     return posts
@@ -96,14 +98,14 @@ async function getLikesFromPostId(postId){
 
 async function standardPost(req){
     let profileuser = await getUserByFullName(req.params.fullname);
-    console.log('posted on' + profileuser.id);
+
     Post.create({
         posttype : req.body.posttype,
         postcontent : req.body.postcontent,
         lastupdated : moment(),
         dateposted : moment(),
-        postedon : profileuser.id,
-        userId : req.user.id
+        postedBy : req.user.id,
+        postedOn : profileuser.id,
     });
 };
 module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId};
