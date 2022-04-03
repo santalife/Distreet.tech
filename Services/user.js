@@ -6,22 +6,25 @@ const passport = require('passport');
 const User = require('../models/User');
 const Post = require('../models/Post');
 const PostFile = require('../Models/PostFile');
+const PostComment = require('../Models/PostComment');
+
 const upload = require('../Services/imageUpload');
 
 var bcrypt = require('bcryptjs');
+const PostLike = require('../Models/PostLike');
 
 function register(req, res){
     upload(req, res, async function  (err) {
         if (err) {
             console.log(err);
         } else {
-            console.log(req.files);
+
             let { fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password } = req.body;
             let profilepicture = "/upload/" + req.files[0].filename;            
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(password, salt, function(err, hash) {
                     User.create({
-                        fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password: hash, profilepicture
+                        fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password: hash, profilepicture, role: 'user'
                     });
                 });
             });            
@@ -53,44 +56,52 @@ async function getUserByFullName(fullname){
     return user;
 }
 
-async function getImagesFromPostId(req){
+async function getAllPosts(req){
     let user = await getUserByFullName(req.params.fullname);
-    console.log(req.user);
 
     let posts = await Post.findAll({
         where: {
-            userId: user.id
+            postedOn: user.id,            
         },
         order: [['dateposted', 'DESC']],
-        raw: true
+        include: ['PostedBy', 
+        'PostedOn', 
+        'PostFile', 
+        'PostLike', 
+        {
+            model: PostComment, 
+            include: [User]
+        }],
+        nest: true
     });
     
-    for(var i=0 ; i < posts.length; i++ ){
-        posts[i].postedby = await getUserById(posts[i].userId);
-        if(posts[i].posttype == "Photos/Videos"){
-            posts[i].postimages = await PostFile.findAll({
-                where: {
-                    postId: posts[i].id
-                },
-                order: [['id', 'DESC']],
-                raw: true
-            }); 
-        };
-    };
 
-
+    posts = posts.map((post) => post.get({ plain: true }));
+    
     return posts
 }
+
+async function getLikesFromPostId(postId){
+    let postLikes = await PostLike.findAll({
+        where:{
+            postId
+        },
+        raw: true
+    });
+
+    return postLikes
+};
+
 async function standardPost(req){
     let profileuser = await getUserByFullName(req.params.fullname);
-    console.log('posted on' + profileuser.id);
+
     Post.create({
         posttype : req.body.posttype,
         postcontent : req.body.postcontent,
         lastupdated : moment(),
         dateposted : moment(),
-        postedon : profileuser.id,
-        userId : req.user.id
+        postedBy : req.user.id,
+        postedOn : profileuser.id,
     });
 };
-module.exports = { register, getImagesFromPostId, getUserByFullName, standardPost };
+module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId};
