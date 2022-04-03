@@ -6,6 +6,8 @@ const passport = require('passport');
 const User = require('../models/User');
 const Post = require('../models/Post');
 const PostFile = require('../Models/PostFile');
+const PostComment = require('../Models/PostComment');
+
 const upload = require('../Services/imageUpload');
 
 var bcrypt = require('bcryptjs');
@@ -22,7 +24,7 @@ function register(req, res){
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(password, salt, function(err, hash) {
                     User.create({
-                        fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password: hash, profilepicture
+                        fullname, email, addressstreet, blocknumber, unitnumber, postalcode, phonenumber, dateofbirth, nric, password: hash, profilepicture, role: 'user'
                     });
                 });
             });            
@@ -62,12 +64,20 @@ async function getAllPosts(req){
             postedOn: user.id,            
         },
         order: [['dateposted', 'DESC']],
-        include: {all: true, nest: true},
+        include: ['PostedBy', 
+        'PostedOn', 
+        'PostFile', 
+        'PostLike', 
+        {
+            model: PostComment, 
+            include: [User]
+        }],
         nest: true
     });
     
-    posts = posts.map((post) => post.get({ plain: true }));
 
+    posts = posts.map((post) => post.get({ plain: true }));
+    
     return posts
 }
 

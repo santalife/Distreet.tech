@@ -54,7 +54,7 @@ function Comment(t, e){
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         'success': (data) => {
-
+            setInterval('location.reload()', 100);            
         }
     })
 }

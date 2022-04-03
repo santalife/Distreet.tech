@@ -62,7 +62,8 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="{{user.profilepicture}}" class="input-profile-img rounded float-start rounded-circle">
+                                <img src="{{user.profilepicture}}"
+                                    class="input-profile-img rounded float-start rounded-circle">
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <form method="post" action="/user/profile/{{profileuser.fullname}}/post/standard">
@@ -107,7 +108,7 @@
                             <div class="modal-header border-bottom-0">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0">
-                                        <img src="/img/yanz.jpg"
+                                        <img src="{{user.profilepicture}}"
                                             class="post-profile-img rounded float-start rounded-circle" />
                                     </div>
                                     <div class="flex-grow-1 ms-3">
@@ -129,7 +130,8 @@
                                             placeholder="What's on your mind?" id="postcontent"
                                             name="postcontent"></textarea>
                                         <input type="hidden" value="Photos/Videos" id="posttype" name="posttype" />
-                                        <input type="hidden" value="{{profileuser.fullname}}" id="fullname" name="fullname" />
+                                        <input type="hidden" value="{{profileuser.fullname}}" id="fullname"
+                                            name="fullname" />
                                     </div>
                                     <div class="col-md-12">
                                         <input type="file" id="input-files" class="filepond" name="images">
@@ -151,7 +153,8 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="{{PostedBy.profilepicture}}" class="input-profile-img rounded float-start rounded-circle">
+                                <img src="{{PostedBy.profilepicture}}"
+                                    class="input-profile-img rounded float-start rounded-circle">
                             </div>
                             <div class="flex-grow-1 ms-3">
                                 <h5 class="posts-username mb-0">{{PostedBy.fullname}}</h5>
@@ -174,7 +177,7 @@
 
                         {{!-- <img src="{{#withLast postimages}}{{this.imagepath}}{{/withLast}}" class="w-100" /> --}}
                     </a>
-                    
+
                     {{!-- MODAL SECTION --}}
                     <div class="modal fade" id="post-modal-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
@@ -186,8 +189,8 @@
                                 </div>
                                 <div class="modal-body pb-0">
                                     <div class="row h-100">
-                                        <div class="col-md-9 d-flex justify-content-center mb-4 mb-sm-0">                                            
-                                            <img src="{{#withFirst PostFile}}{{this.imagepath}}{{/withFirst}}" alt="">                                            
+                                        <div class="col-md-9 d-flex justify-content-center mb-4 mb-sm-0">
+                                            <img src="{{#withFirst PostFile}}{{this.imagepath}}{{/withFirst}}" alt="">
                                         </div>
                                         <div class="col-md-3">
                                             <div class="d-flex">
@@ -311,20 +314,27 @@
                             {{/eq}}
                             <div class="post-btn-section">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li class="nav-item">
-                                        {{!-- <form method="post" action="/user/profile/{{../profileuser.fullname}}/like/{{id}}"> --}}
-                                        {{#if liked}}
-                                            <button class="btn btn-danger w-100 border-0 fw-bold" postId="{{id}}" fullname="{{../profileuser.fullname}}" onclick="Dislike(this);"><i class="fas fa-thumbs-up"></i> {{length likes}}</a>
-                                        {{else}}
-                                            <button class="btn btn-outline-danger w-100 border-0 fw-bold" postId="{{id}}" fullname="{{../profileuser.fullname}}" onclick="Like(this);"><i class="fas fa-thumbs-up"></i> Like</a>
-                                        {{/if}}
-                                        {{!-- </form> --}}
+                                    <li class="nav-item ps-2 pe-2">
+                                        {{!-- <form method="post"
+                                            action="/user/profile/{{../profileuser.fullname}}/like/{{id}}"> --}}
+                                            {{#if PostLike}}
+                                            <button class="btn btn-danger w-100 border-0 fw-bold" postId="{{id}}"
+                                                fullname="{{../profileuser.fullname}}" onclick="Dislike(this);"><i
+                                                    class="fas fa-thumbs-up"></i> {{length PostLike}}</a>
+                                            {{else}}
+                                            <button class="btn btn-outline-danger w-100 border-0 fw-bold"
+                                                postId="{{id}}" fullname="{{../profileuser.fullname}}"
+                                                onclick="Like(this);"><i class="fas fa-thumbs-up"></i> Like</a>
+                                            {{/if}}
+                                                    {{!--
+                                        </form> --}}
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#comment-input-{{id}}"><i
-                                                class="fas fa-comment-alt-dots"></i> Comment</a>
+                                    <li class="nav-item ps-2 pe-2">
+                                        <a class="btn btn-outline-success w-100 border-0 fw-bold"
+                                            href="#comment-input-{{id}}"><i class="fas fa-comment-alt-dots"></i>
+                                            Comment</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item ps-2 pe-2">
                                         <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i
                                                 class="fas fa-share"></i> Share</a>
                                     </li>
@@ -350,9 +360,11 @@
                                 </div>
 
 
+                                {{#if postcomments}}
+                                {{#each postcomments}}
                                 <div class="d-flex mt-3">
                                     <div class="flex-shrink-0">
-                                        <img src="/img/yanz.jpg"
+                                        <img src="{{user.profilepicture}}"
                                             class="input-profile-img rounded float-start rounded-circle">
                                     </div>
                                     <div class="flex-grow-1 ms-4">
@@ -362,9 +374,9 @@
                                                     <div class="col-md-auto ps-0">
                                                         <h6 class="mb-0">
                                                             <a class="text-decoration-none fw-bold text-black"
-                                                                href="/D0004">joy joy boi</a>
+                                                                href="/user/profile/{{user.fullname}}">{{ user.fullname }}</a>
                                                         </h6>
-                                                        <p class="mb-0">joiboi</p>
+                                                        <p class="mb-0">{{ comment }}</p>
                                                     </div>
                                                 </div>
                                                 <ul class="list-inline fs-7 ps-3 mb-0">
@@ -376,6 +388,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{/each}}
+                                {{/if}}
+
                                 <div class="d-flex mt-3">
                                     <div class="flex-shrink-0">
                                         <img src="/img/yanz.jpg"
@@ -614,74 +629,69 @@
                             <h4 class="card-title intro-title">Photos</h4>
                         </div>
 
-                        <div class="col-3 d-flex justify-content-end">
+                        <div class="col-md-3 d-flex justify-content-end">
                             <button class="btn btn-primary"><i class="fas fa-plus"></i> Add Photos/Videos</button>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-2">
+                    <div class="row gy-4 mt-1">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <a asp-area="" asp-page="Index">
-                                    <img src="/img/carousel1.jpg" class="rounded img-fluid photos-images" alt=".">
-
-                                </a>
+                                <img src="/img/carousel1.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/carousel2.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/carousel2.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <div class="ratio ratio-1x1">
-                                <img src="/img/yanz.jpg" class="rounded img-fluid photos-images" alt=".">
+                                <img src="/img/yanz.jpg" class="rounded img-fluid profile-photo" alt=".">
                             </div>
                         </div>
                     </div>

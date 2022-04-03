@@ -26,12 +26,15 @@ const setUpDB = (drop) => {
         post.hasMany(postfile, {as: 'PostFile', foreignKey: 'postId'});    
         postfile.belongsTo(post, {as: 'PostFile', foreignKey: 'postId'});
 
-        post.hasMany(postlike, {as: 'PostLike'});
-        postlike.belongsTo(post, {as: 'PostLike'});
-        user.hasMany(postlike, {as: 'PostLikeBy'});
-        postlike.belongsTo(user, {as: 'PostLikeBy'});
+        post.hasMany(postlike, {as: 'PostLike', foreignKey: 'postId'});   
+        postlike.belongsTo(post, {as: 'PostLike', foreignKey: 'postId'});
+        user.hasMany(postlike, {as: 'PostLikeBy', foreignKey: 'likedBy'});
+        postlike.belongsTo(user, {as: 'PostLikeBy', foreignKey: 'likedBy'});
 
         post.hasMany(postcomment);
+        postcomment.belongsTo(post);
+        user.hasMany(postcomment, {foreignKey: 'postedBy'});
+        postcomment.belongsTo(user, {foreignKey: 'postedBy'});
         postcomment.hasMany(postcomment);
 
         mySQLDB.sync({ // Creates table if none exists

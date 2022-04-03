@@ -73,7 +73,7 @@ router.post('/profile/:fullname/like/:postId', ensureAuthenticated, async functi
     console.log('iam here');
 
     await PostLike.create({
-        userId : req.user.id,
+        likedBy : req.user.id,
         postId : req.params.postId
     })
 
@@ -96,7 +96,7 @@ router.post('/profile/:fullname/dislike/:postId', ensureAuthenticated, async fun
 
     await PostLike.destroy({
         where:{
-            userId : req.user.id,
+            likedBy : req.user.id,
             postId : req.params.postId
         }
     })
@@ -118,7 +118,7 @@ router.post('/profile/:fullname/comment/:postId', ensureAuthenticated, async fun
     
     console.log('iam commenting');
     console.log(req.body.comment);
-    await PostComment.create({comment: req.body.comment, lastupdated: moment(), dateposted: moment(), postId: req.params.postId})
+    await PostComment.create({comment: req.body.comment, lastupdated: moment(), dateposted: moment(), postId: req.params.postId, postedBy: req.user.id})
     res.json('hello!');
 })
 
