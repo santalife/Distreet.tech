@@ -71,13 +71,14 @@ async function getAllPosts(req){
         {
             model: PostComment, 
             include: [User]
-        }],
+        }],    
         nest: true
     });
     
 
     posts = posts.map((post) => post.get({ plain: true }));
     
+    console.log(posts);
     return posts
 }
 
