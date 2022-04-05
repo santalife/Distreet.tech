@@ -27,6 +27,7 @@ const setUpDB = (drop) => {
         postfile.belongsTo(post, {as: 'PostFile', foreignKey: 'postId'});
 
         post.hasMany(postlike, {as: 'PostLike', foreignKey: 'postId'});   
+        post.hasMany(postlike, {as: 'PostLikes', foreignKey: 'postId'});   
         postlike.belongsTo(post, {as: 'PostLike', foreignKey: 'postId'});
         user.hasMany(postlike, {as: 'PostLikeBy', foreignKey: 'likedBy'});
         postlike.belongsTo(user, {as: 'PostLikeBy', foreignKey: 'likedBy'});
