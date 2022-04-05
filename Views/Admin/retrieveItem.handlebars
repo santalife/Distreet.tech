@@ -3,21 +3,39 @@
 <div class="row g-5 row-cols-4">
     {{#each items}}
     <div class="col">
-        <a href="/admin/manage/items/update/{{id}}">
-            <div class="card item-card" style="width: 18rem;">
-                <div class="col-md-4">
-                    <img src="../img/yanz.jpg" class="" alt="">
-                </div>
-                <div class="col-md-8">
+        <a href="/admin/manage/items/update/{{id}}" class="text-decoration-none">
+            <div class="card item-card" >
+                <div class="">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{{name}}</h5>
                         <p class="card-text">{{description}}</p>
                         <p class="card-text">{{price}}</p>
                         <p class="card-text">{{status}}</p>
+                        <a class="text-end" data-bs-toggle="modal" data-bs-target="#delete-modal-{{id}}"><i class="far fa-trash-alt fa-lg text-danger"></i></a>
                     </div>
                 </div>
             </div>
         </a>
     </div>
+<div class="modal fade" id="delete-modal-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-trash-alt fa-lg text-danger"></i> Delete Item</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form method="POST" action="/admin/manage/items/retrieve/{{id}}?_method=DELETE">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    
     {{/each}}
 </div>

@@ -1,44 +1,100 @@
 <div class="d-flex justify-content-center">
-<form method="POST">
-    <div class="row gy-3">
-        <div class="col-md-12">
-            <h2 class="fw-bolder"><i class="fas fa-plus-hexagon"></i> Create Item</h2>
-        </div>
-        <div class="col-md-6">
-            <label for="name" class="form-label fw-bold">Name: </label>
-            <input type="text" id="name" class="form-control" name="name">
-        </div>
-        <div class="col-md-3">
-            <label for="type" class="form-label fw-bold">Product Type: </label>
-            <input type="text" id="type" class="form-control" name="type">
-        </div>
-        <div class="col-md-3">
-            <label for="type" class="form-label fw-bold">Product Subtype: </label>
-            <input type="text" id="type" class="form-control" name="type">
-        </div>
-        <div class="col-md-6">
-            <label for="price" class="form-label fw-bold">Price: </label>
-            <input type="number" id="price" class="form-control" name="price">
-        </div>
-        <div class="col-md-3">
-            <label for="status" class="form-label fw-bold">Status: </label>
-            <select class="form-select" id="status" name="status">
-                <option>In stock</option>
-                <option>Sold out</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label for="stock" class="form-label fw-bold">Stock: </label>
-            <input type="number" id="stock" class="form-control" name="stock">
-        </div>
-        <div class="col-md-6">
-            <label for="description" class="form-label fw-bold">Description: </label>
-            <textarea class="form-control" rows="3" id="description" name="description"></textarea>
-        </div>
+    <form method="POST">
+        <div class="row gy-3">
+            <div class="col-md-12">
+                <h2 class="fw-bolder"><i class="fas fa-plus-hexagon"></i> Create Item</h2>
+            </div>
+            <div class="col-md-6">
+                <div class="row gy-3">
+                    <div class="col-md-12">
+                        <label for="name" class="form-label fw-bold">Name: </label>
+                        <input type="text" id="name" class="form-control" name="name">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="type" class="form-label fw-bold">Product Type: </label>
+                        <input type="text" id="type" class="form-control" name="type">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="type" class="form-label fw-bold">Product Subtype: </label>
+                        <input type="text" id="type" class="form-control" name="type">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="price" class="form-label fw-bold">Price: </label>
+                        <input type="number" id="price" class="form-control" name="price">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="status" class="form-label fw-bold">Status: </label>
+                        <select class="form-select" id="status" name="status">
+                            <option>In stock</option>
+                            <option>Sold out</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="stock" class="form-label fw-bold">Stock: </label>
+                        <input type="number" id="stock" class="form-control" name="stock">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="description" class="form-label fw-bold">Description: </label>
+                        <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+                    </div>
 
-        <div class="col-md-12 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary mt-2 fw-bold">Create</button>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="input-item-picture" class="form-label fw-bold">Item Picture</label>
+                <input type="file" id="input-item-picture" class="filepond" name="itempicture">
+            </div>
+
+            <div class="col-md-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mt-2 fw-bold">Create</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>
+
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+
+<script>
+    FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode, FilePondPluginFileMetadata, FilePondPluginImageCrop, FilePondPluginImageTransform);
+    const itempictureElem = document.querySelector('#input-item-picture');
+    const itempicturePond = FilePond.create(itempictureElem);
+
+    itempicturePond.setOptions({
+        maxFiles: 4,
+        labelIdle: 'Drag & Drop your Photos or <span class="filepond--label-action">Browse</span>',
+        allowImageCrop: true,
+        allowMultiple: true,
+        allowImageTransform: true,
+        imageCropAspectRatio: '1:1',
+    });
+
+    $(function () {
+        $("#registration-form").submit(function (e) {
+            e.preventDefault();
+            var imagefiles = itempicturePond.getFiles();
+            var formdata = new FormData(this);
+
+            for (var i = 0; i < imagefiles.length; i++) {
+                formdata.append("images", imagefiles[i].file);
+            }
+            for (var pair of formdata.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            $.ajax({
+                url: "/register",
+                type: 'POST',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                'success': (data) => {
+                    top.location.href = '/';
+                }
+            })
+        })
+    })
+</script>

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
-<form method="POST">
-    {{#if item}}
+{{#if item}}
+<form method="POST" action="/admin/manage/items/update/{{item.id}}?_method=PUT">
     <div class="row gy-3">
         <div class="col-md-12">
             <h2 class="fw-bolder"><i class="fas fa-plus-hexagon"></i> Update Item</h2>
@@ -41,6 +41,6 @@
             <button type="submit" class="btn btn-primary mt-2 fw-bold">Update</button>
         </div>
     </div>
-    {{/if}}
 </form>
+{{/if}}
 </div>
