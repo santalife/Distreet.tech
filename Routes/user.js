@@ -3,47 +3,42 @@ const router = express.Router();
 const moment = require('moment');
 const mysql = require('mysql');
 const Post = require('../models/Post');
-const { register, getImagesFromPostId, getUserByFullName, standardPost } = require("../services/user")
+const { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId } = require("../services/user")
 const { authUser, authNotUser, authRole, ensureAuthenticated } = require("../services/auth");
 const upload = require('../Services/imageUpload');
 const PostFile = require('../Models/PostFile');
 const PostLike = require('../Models/PostLike');
 const { raw } = require('handlebars-helpers/lib/string');
+const PostComment = require('../Models/PostComment');
 
 
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
-    let posts = await getImagesFromPostId(req);
-    let profileuser = await getUserByFullName(req.params.fullname)
+    let posts = await getAllPosts(req);
+
+    // for(var i = 0 ; i < posts.length ; i++){
+    //     posts[i].likes = await getLikesFromPostId(posts[i].id);
+    //     posts[i].liked = await PostLike.findOne({
+    //         where:{
+    //             postId : posts[i].id,
+    //             userId : req.user.id
+    //         },
+    //         raw: true            
+    //     });
+    // };
+
+    let profileuser = await getUserByFullName(req.params.fullname);
+
     res.render('User/Profile', { posts, profileuser });
 });
 
-//Like Feature
-router.post('/profile/:fullname/like/:postId', ensureAuthenticated, async function (req, res) {
 
-    console.log('iam here');
-
-    await PostLike.create({
-        userId : req.user.id,
-        postId : req.params.postId
-    })
-
-    var likeCount = await PostLike.count({
-        where:{
-            postId : req.params.postId
-        },
-        raw: true
-    });
-
-    console.log(likeCount);
-
-    res.json({likeCount});
-})
-
+//STANDARD POST
 router.post('/profile/:fullname/post/standard', ensureAuthenticated, (req, res) => {
     standardPost(req);
     res.redirect('/user/profile/'+req.params.fullname);
 });
 
+//PHOTO & VIDEO POST
 router.post('/profile/post/photo&video', ensureAuthenticated, async function (req, res) {
     console.log("Uploading...");
     upload(req, res, async function  (err) {
@@ -56,8 +51,8 @@ router.post('/profile/post/photo&video', ensureAuthenticated, async function (re
                 postcontent : req.body.postcontent,
                 lastupdated : moment(),
                 dateposted : moment(),                
-                userId : req.user.id,
-                postedon : profileuser.id
+                postedBy : req.user.id,
+                postedOn : profileuser.id
             });        
             const postId = post.id        
             req.files.forEach(image => {                
@@ -69,9 +64,63 @@ router.post('/profile/post/photo&video', ensureAuthenticated, async function (re
 
             res.json("success")
         }
-    });
-    
+    });    
 });
+
+//Like Feature
+router.post('/profile/:fullname/like/:postId', ensureAuthenticated, async function (req, res) {
+
+    console.log('iam here');
+
+    await PostLike.create({
+        likedBy : req.user.id,
+        postId : req.params.postId
+    })
+
+    var likeCount = await PostLike.count({
+        where:{
+            postId : req.params.postId
+        },
+        raw: true
+    });
+
+    console.log(likeCount);
+
+    res.json(likeCount);
+})
+
+//Dislike Feature
+router.post('/profile/:fullname/dislike/:postId', ensureAuthenticated, async function (req, res) {
+
+    console.log('iam here');
+
+    await PostLike.destroy({
+        where:{
+            likedBy : req.user.id,
+            postId : req.params.postId
+        }
+    })
+
+    var likeCount = await PostLike.count({
+        where:{
+            postId : req.params.postId
+        },
+        raw: true
+    });
+
+    console.log(likeCount);
+
+    res.json(likeCount);
+})
+
+//COMMENT FEATURE
+router.post('/profile/:fullname/comment/:postId', ensureAuthenticated, async function (req, res) {
+    
+    console.log('iam commenting');
+    console.log(req.body.comment);
+    await PostComment.create({comment: req.body.comment, lastupdated: moment(), dateposted: moment(), postId: req.params.postId, postedBy: req.user.id})
+    res.json('hello!');
+})
 
 router.get('/profile/:fullname/editprofile', ensureAuthenticated, async function (req, res) {
     res.render('Main/index')

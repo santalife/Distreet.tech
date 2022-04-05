@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+<form method="POST">
+    <div class="row gy-3">
+        <div class="col-md-12">
+            <h2 class="fw-bolder"><i class="fas fa-plus-hexagon"></i> Create Event</h2>
+        </div>
+        <div class="col-md-6">
+            <label for="name" class="form-label fw-bold">Event Name: </label>
+            <input type="text" id="name" class="form-control" name="name">
+        </div>
+        <div class="col-md-3">
+            <label for="type" class="form-label fw-bold">Event Type: </label>
+            <input type="text" id="type" class="form-control" name="type">
+        </div>
+        <div class="col-md-3">
+            <label for="type" class="form-label fw-bold">Event Subtype: </label>
+            <input type="text" id="type" class="form-control" name="type">
+        </div>
+        <div class="col-md-6">
+            <label for="price" class="form-label fw-bold">Price: </label>
+            <input type="number" id="price" class="form-control" name="price">
+        </div>
+        <div class="col-md-3">
+            <label for="status" class="form-label fw-bold">Status: </label>
+            <select class="form-select" id="status" name="status">
+                <option>Upcoming</option>
+                <option>TBD</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="stock" class="form-label fw-bold">Date: </label>
+            <input type="number" id="stock" class="form-control" name="stock">
+        </div>
+        <div class="col-md-6">
+            <label for="description" class="form-label fw-bold">Description: </label>
+            <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+        </div>
+
+        <div class="col-md-12 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary mt-2 fw-bold">Create</button>
+        </div>
+    </div>
+</form>
+</div>
