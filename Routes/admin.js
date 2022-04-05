@@ -18,8 +18,9 @@ router.get('/manage/items/create', (req, res) => {
     res.render('admin/createItem');
 });
 
-router.post('/manage/items/create', async function (req, res){
-    let {name, description, price, status, stock} = req.body;
+router.post('/manage/items/create', async function (req, res) {
+    let { name, description, price, status, stock } = req.body;
+    
     let item = await Item.create({
         name,
         description,
@@ -30,6 +31,7 @@ router.post('/manage/items/create', async function (req, res){
         stock,
         sold: false
     });
+
     res.redirect('/admin/manage/items/retrieve');
 });
 
@@ -38,18 +40,46 @@ router.get('/manage/items/retrieve', async function (req, res) {
         order: [['last_updated', 'DESC']],
         raw: true
     });
-    res.render('admin/retrieveItem', {items});
+    res.render('admin/retrieveItem', { items });
 });
 
 router.get('/manage/items/update/:id', async function (req, res) {
     let item = await Item.findOne({
-        where:{
+        where: {
             id: req.params.id
         },
         raw: true
     });
     console.log(item);
-    res.render('admin/updateItem', {item});
+    res.render('admin/updateItem', { item });
+});
+
+router.put('/manage/items/update/:id', async function (req, res) {
+    let { name, description, price, status, stock } = req.body;
+    let item = await Item.update({
+        name,
+        description,
+        price,
+        last_updated: moment(),
+        status,
+        stock
+    },
+        {
+            where: {
+                id: req.params.id
+            }
+        });
+    res.redirect('/admin/manage/items/retrieve');
+});
+
+router.delete('/manage/items/retrieve/:id', async function (req, res) {
+    console.log("deleted");
+    await Item.destroy({
+        where: {
+            id: req.params.id
+        }
+    });
+    res.redirect('/admin/manage/items/retrieve');
 });
 
 module.exports = router;
