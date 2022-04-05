@@ -1,44 +1,23 @@
 <h2 class="mb-5 fw-bold"><i class="bi bi-cart3"></i>All Products</h2>
 
 <div class="row g-5 row-cols-4">
+    {{#each items}}
     <div class="col">
-        <div class="card item-card" style="width: 18rem;">
-            <div class="col-md-4">
-                <img src="../img/yanz.jpg" class="" alt="">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Card Body!</h5>
-                    <p class="card-text">This is a paragraph</p>
+        <a href="/admin/manage/items/update/{{id}}">
+            <div class="card item-card" style="width: 18rem;">
+                <div class="col-md-4">
+                    <img src="../img/yanz.jpg" class="" alt="">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{name}}</h5>
+                        <p class="card-text">{{description}}</p>
+                        <p class="card-text">{{price}}</p>
+                        <p class="card-text">{{status}}</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col">
-        <div class="card item-card" style="">
-            <div class="col-md-4">
-                <img src="../img/yanz.jpg" class="" alt="">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Card Body!</h5>
-                    <p class="card-text">This is a paragraph</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card item-card" style="">
-            <div class="col-md-4">
-                <img src="../img/yanz.jpg" class="" alt="">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Card Body!</h5>
-                    <p class="card-text">This is a paragraph</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    {{/each}}
 </div>
