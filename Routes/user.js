@@ -45,6 +45,7 @@ router.post('/profile/post/photo&video', ensureAuthenticated, async function (re
         if (err) {
             console.log(err);
         } else {
+            
             let profileuser = await getUserByFullName(req.body.fullname)
             let post = await Post.create({
                 posttype : req.body.posttype,

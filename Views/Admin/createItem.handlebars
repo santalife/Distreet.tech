@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-    <form method="POST">
+    <form method="POST" id="create-item" enctype="multipart/form-data">
         <div class="row gy-3">
             <div class="col-md-12">
                 <h2 class="fw-bolder"><i class="fas fa-plus-hexagon"></i> Create Item</h2>
@@ -43,7 +43,7 @@
             </div>
             <div class="col-md-6">
                 <label for="input-item-picture" class="form-label fw-bold">Item Picture</label>
-                <input type="file" id="input-item-picture" class="filepond" name="itempicture">
+                <input type="file" id="input-item-picture" class="filepond">
             </div>
 
             <div class="col-md-12 d-flex justify-content-end">
@@ -74,11 +74,11 @@
     });
 
     $(function () {
-        $("#registration-form").submit(function (e) {
+        $("#create-item").submit(function (e) {
             e.preventDefault();
             var imagefiles = itempicturePond.getFiles();
             var formdata = new FormData(this);
-
+            formdata.delete("filepond");
             for (var i = 0; i < imagefiles.length; i++) {
                 formdata.append("images", imagefiles[i].file);
             }
@@ -86,7 +86,7 @@
                 console.log(pair[0] + ', ' + pair[1]);
             }
             $.ajax({
-                url: "/register",
+                url: "/admin/manage/items/create",
                 type: 'POST',
                 data: formdata,
                 contentType: false,
