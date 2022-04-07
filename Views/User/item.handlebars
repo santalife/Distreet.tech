@@ -1,6 +1,6 @@
 {{#if item}}
 <div class="row gy-3 gx-3">
-    <div class="col-md-5"><img src="/img/yanz.jpg"/>
+    <div class="col-md-5"><img src="/img/yanz.jpg" class="img-fluid"/>
     </div>
     <div class="col-md-7">
         <div class="row gy-3 d-flex align-items-end flex-column">
@@ -8,6 +8,10 @@
                 <h2>{{item.name}}</h2>
             </div>
             <div class="col-md-12">
+                <h2 class="fw-bolder">${{item.price}}</h2>
+            </div>
+            <div class="col-md-12">
+                <input id="input-id" name="input-name" type="number" class="rating" value="4.6">
                 <p>Options</p>
             </div>
             <div class="col-md-12 mb-3 mb-sm-0">
@@ -22,3 +26,7 @@
     </div>
 </div>
 {{/if}}
+<script>
+// with plugin options
+$("#input-id").rating({displayOnly: true, min:0, max:5, step:0.1, size:'md'});
+</script>

@@ -19,6 +19,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.4",
     "bcryptjs": "^2.4.3",
+    "bootstrap-star-rating": "^4.1.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
     "express-handlebars": "^6.0.3",

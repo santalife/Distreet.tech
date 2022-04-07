@@ -135,7 +135,7 @@ router.get('/item/:id', async function (req, res){
         },
         raw: true
     });
-    console.log(item)
+    console.log(item);
     res.render('User/item', {item});
 })
 

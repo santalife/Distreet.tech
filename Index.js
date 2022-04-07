@@ -114,6 +114,7 @@ app.engine('handlebars', handlebars.engine({
 
 //Serves static files (we need it to import a css file)
 app.use(express.static('public'))
+app.use("/node_modules", express.static(__dirname + "/node_modules"));
 
 //Makes the app listen to port 3000
 app.listen(port, () => console.log(`App listening to port ${port}`));
