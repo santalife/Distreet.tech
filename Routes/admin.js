@@ -23,12 +23,13 @@ router.get('/manage/items/create', (req, res) => {
 router.post('/manage/items/create', async function (req, res) {
     upload(req, res, async function  (err) {
         if (err) {
-            console.log(req.body)
+            console.log(req.body);
             console.log(err);
         } else {
-            console.log(req.body) 
+            console.log(req.body);
             let { name, description, price, status, stock } = req.body;
-            console.log(req.body.name)
+            console.log(req.body.name);
+
             let item = await Item.create({
                 name,
                 description,
@@ -39,8 +40,10 @@ router.post('/manage/items/create', async function (req, res) {
                 stock,
                 sold: false
             });
-            const itemId = item.id
-            console.log(req.files)
+
+            const itemId = item.id;
+
+            console.log(req.files);
             req.files.forEach(image => {
                 ItemFile.create({
                     imagepath : "/upload/" + image.filename,
@@ -48,18 +51,22 @@ router.post('/manage/items/create', async function (req, res) {
                 });
             });
         
-            res.json("success")
+            res.json("success");
         
         }
         })
-    // res.redirect('/admin/manage/items/retrieve');
 });
 
 router.get('/manage/items/retrieve', async function (req, res) {
     let items = await Item.findAll({
         order: [['last_updated', 'DESC']],
-        raw: true
+        include: ItemFile,
+        nest: true
     });
+
+    items = items.map((item) => item.get({ plain: true }));
+
+    console.log(items);
     res.render('admin/retrieveItem', { items });
 });
 

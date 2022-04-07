@@ -10,6 +10,7 @@ const PostFile = require('../Models/PostFile');
 const PostLike = require('../Models/PostLike');
 const { raw } = require('handlebars-helpers/lib/string');
 const PostComment = require('../Models/PostComment');
+const Item = require('../Models/Item')
 
 
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
@@ -127,6 +128,16 @@ router.get('/profile/:fullname/editprofile', ensureAuthenticated, async function
     res.render('Main/index')
 })
 
+router.get('/item/:id', async function (req, res){
+    let item = await Item.findOne({
+        where: {
+            id: req.params.id
+        },
+        raw: true
+    });
+    console.log(item)
+    res.render('User/item', {item});
+})
 
 
 module.exports = router;
