@@ -320,7 +320,7 @@
                                             {{#if PostLike}}
                                             <button class="btn btn-danger w-100 border-0 fw-bold" postId="{{id}}"
                                                 fullname="{{../profileuser.fullname}}" onclick="Dislike(this);"><i
-                                                    class="fas fa-thumbs-up"></i> {{length PostLike}}</a>
+                                                    class="fas fa-thumbs-up"></i> {{length PostLikes}}</a>
                                             {{else}}
                                             <button class="btn btn-outline-danger w-100 border-0 fw-bold"
                                                 postId="{{id}}" fullname="{{../profileuser.fullname}}"
@@ -390,33 +390,6 @@
                                 </div>
                                 {{/each}}
                                 {{/if}}
-
-                                <div class="d-flex mt-3">
-                                    <div class="flex-shrink-0">
-                                        <img src="/img/yanz.jpg"
-                                            class="input-profile-img rounded float-start rounded-circle">
-                                    </div>
-                                    <div class="flex-grow-1 ms-4">
-                                        <div class="row gy-2">
-                                            <div class="col-auto ps-1">
-                                                <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
-                                                    <div class="col-md-auto ps-0">
-                                                        <h6 class="mb-0">
-                                                            <a class="text-decoration-none fw-bold text-black"
-                                                                href="/D0004">joy joy boi</a>
-                                                        </h6>
-                                                        <p class="mb-0">a </p>
-                                                    </div>
-                                                </div>
-                                                <ul class="list-inline fs-7 ps-3 mb-0">
-                                                    <li class="list-inline-item fw-bold">Like</li>
-                                                    <li class="list-inline-item fw-bold">Reply</li>
-                                                    <li class="list-inline-item">2d</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 

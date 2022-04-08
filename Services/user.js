@@ -67,7 +67,15 @@ async function getAllPosts(req){
         include: ['PostedBy', 
         'PostedOn', 
         'PostFile', 
-        'PostLike', 
+        'PostLikes',
+        {
+            model: PostLike,
+            as: 'PostLike',
+            required: false,
+            where:{
+                likedBy: req.user.id
+            }
+        },
         {
             model: PostComment, 
             include: [User]
