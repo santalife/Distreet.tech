@@ -1,7 +1,7 @@
 <div class="profile-header">
     <div class="row">
         <div class="col d-flex align-items-center justify-content-center">
-            <img src="{{profileuser.profilepicture}}" class="rounded float-start profile-img rounded-circle" alt=".">
+            <img src="{{profileuser.profilepicture}}" id="profile-picture" class="rounded float-start profile-img rounded-circle" alt=".">
         </div>
     </div>
 
@@ -344,7 +344,7 @@
 
                         {{!-- COMMENTS SECTION --}}
                         <div class="card-body border-top px-0 ms-3 me-3">
-                            <div class="row">
+                            <div class="row" id="comments-section-{{id}}" >
                                 <div class="d-flex">
                                     <div class="flex-shrink-0">
                                         <img src="{{../user.profilepicture }}"
@@ -368,7 +368,7 @@
                                             class="input-profile-img rounded float-start rounded-circle">
                                     </div>
                                     <div class="flex-grow-1 ms-4">
-                                        <div class="row gy-2">
+                                        <div class="row gy-2" id="row-comment-{{id}}">
                                             <div class="col-auto ps-1">
                                                 <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
                                                     <div class="col-md-auto ps-0">
@@ -381,7 +381,7 @@
                                                 </div>
                                                 <ul class="list-inline fs-7 ps-3 mb-0">
                                                     <li class="list-inline-item fw-bold">Like</li>
-                                                    <li class="list-inline-item fw-bold">Reply</li>
+                                                    <li class="list-inline-item fw-bold"><a onclick="showReply(this, {{id}});">Reply</a></li>
                                                     <li class="list-inline-item">2d</li>
                                                 </ul>
                                             </div>
@@ -745,4 +745,59 @@
             })
         })
 
+    </script>
+
+    <script>
+        function showReply(e, commentId) {
+            
+
+            if(document.getElementById('reply-to-'+commentId)){
+                document.getElementById("input-reply-" + commentId).focus();
+            }
+            else{
+                var dflex = document.createElement("div");
+                dflex.setAttribute('class', 'd-flex mt-3')
+                dflex.setAttribute('id', 'reply-to-'+commentId);
+                document.getElementById("row-comment-"+commentId).appendChild(dflex);
+
+                var flexshrink = document.createElement("div");
+                flexshrink.setAttribute('class', 'flex-shrink-0');
+
+                var pfp = document.getElementById("profile-picture").src;
+                var commentspicture = document.createElement('img');
+                commentspicture.setAttribute('src', pfp);
+                commentspicture.setAttribute('class', 'input-profile-img rounded float-start rounded-circle');
+
+                flexshrink.appendChild(commentspicture);
+
+                dflex.appendChild(flexshrink);
+
+                var flexgrow = document.createElement("div");
+                flexgrow.setAttribute('class', 'flex-grow-1 ms-3');
+
+                dflex.appendChild(flexgrow);            
+
+                var input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("class", "form-control rounded-pill");
+                input.setAttribute("placeholder", "Replying to Joyboy"); 
+                input.setAttribute("id", "input-reply-" + commentId);
+                flexgrow.appendChild(input);
+
+                var closebutton = document.createElement("button");
+                closebutton.setAttribute('class', 'btn-close');
+                closebutton.onclick = function() {removeReply(this)}
+
+                var flexshrink2 = document.createElement("div");
+                flexshrink2.setAttribute('class', 'flex-shrink-0 ms-3 d-flex align-items-center');
+
+                flexshrink2.append(closebutton);
+                dflex.append(flexshrink2);
+                input.focus();           
+            }
+        }
+
+        function removeReply(el){
+            el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode);
+        }
     </script>
