@@ -755,10 +755,14 @@
                 document.getElementById("input-reply-" + commentId).focus();
             }
             else{
+                var form = document.createElement("form");
+                form.setAttribute("id", "reply-"+commentId+"-form")
+                
                 var dflex = document.createElement("div");
                 dflex.setAttribute('class', 'd-flex mt-3')
                 dflex.setAttribute('id', 'reply-to-'+commentId);
                 document.getElementById("row-comment-"+commentId).appendChild(dflex);
+
 
                 var flexshrink = document.createElement("div");
                 flexshrink.setAttribute('class', 'flex-shrink-0');
@@ -782,7 +786,8 @@
                 input.setAttribute("class", "form-control rounded-pill");
                 input.setAttribute("placeholder", "Replying to Joyboy"); 
                 input.setAttribute("id", "input-reply-" + commentId);
-                flexgrow.appendChild(input);
+                form.appendChild(input);
+                flexgrow.appendChild(form);
 
                 var closebutton = document.createElement("button");
                 closebutton.setAttribute('class', 'btn-close');
@@ -800,4 +805,7 @@
         function removeReply(el){
             el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode);
         }
+    </script>
+    <script>
+        
     </script>
