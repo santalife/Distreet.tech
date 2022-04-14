@@ -111,7 +111,7 @@ async function getAllPosts(req){
 
     posts = posts.map((post) => post.get({ plain: true }));
     
-    console.log(posts[4].postcomments[0].Reply);
+    // console.log(posts[4].postcomments[0].Reply);
     return posts
 }
 

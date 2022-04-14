@@ -16,17 +16,6 @@ const Item = require('../Models/Item')
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
     let posts = await getAllPosts(req);
 
-    // for(var i = 0 ; i < posts.length ; i++){
-    //     posts[i].likes = await getLikesFromPostId(posts[i].id);
-    //     posts[i].liked = await PostLike.findOne({
-    //         where:{
-    //             postId : posts[i].id,
-    //             userId : req.user.id
-    //         },
-    //         raw: true            
-    //     });
-    // };
-
     let profileuser = await getUserByFullName(req.params.fullname);
 
     res.render('User/Profile', { posts, profileuser });
@@ -120,6 +109,7 @@ router.post('/profile/:fullname/comment/:postId', ensureAuthenticated, async fun
     
     console.log('iam commenting');
     console.log(req.body.comment);
+    console.log(req.user.id);
     await PostComment.create({comment: req.body.comment, lastupdated: moment(), dateposted: moment(), postId: req.params.postId, postedBy: req.user.id})
     res.json('hello!');
 })
