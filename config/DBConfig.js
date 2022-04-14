@@ -1,5 +1,7 @@
 // Bring in Sequelize
 const Sequelize = require('sequelize');
+require('sequelize-hierarchy-fork')(Sequelize);
+
 // Bring in db.js which contains database name, username and password
 const db = require('./db');
 // Instantiates Sequelize with database parameters

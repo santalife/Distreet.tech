@@ -124,6 +124,31 @@ router.post('/profile/:fullname/comment/:postId', ensureAuthenticated, async fun
     res.json('hello!');
 })
 
+//REPLY FEATURE
+router.post('/profile/:fullname/reply/:commentId', ensureAuthenticated, async function (req, res) {
+    
+    console.log('iam replying');
+    console.log(req.params.commentId);
+
+    let parent = await PostComment.findOne({
+        where : {
+            id: req.params.commentId
+        },
+        raw : true        
+    });
+    console.log(parent);
+    await PostComment.create({
+        comment: req.body.reply, 
+        lastupdated: moment(), 
+        dateposted: moment(), 
+        postId: parent.postId, 
+        postedBy: req.user.id,
+        postcommentId: req.params.commentId
+    })
+
+    res.json('hello!');
+})
+
 router.get('/profile/:fullname/editprofile', ensureAuthenticated, async function (req, res) {
     res.render('Main/index')
 })

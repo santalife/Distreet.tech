@@ -12,6 +12,7 @@ const upload = require('../Services/imageUpload');
 
 var bcrypt = require('bcryptjs');
 const PostLike = require('../Models/PostLike');
+const { Op } = require('sequelize')
 
 function register(req, res){
     upload(req, res, async function  (err) {
@@ -63,30 +64,54 @@ async function getAllPosts(req){
         where: {
             postedOn: user.id,            
         },
-        order: [['dateposted', 'DESC']],
-        include: ['PostedBy', 
-        'PostedOn', 
-        'PostFile', 
-        'PostLikes',
-        {
-            model: PostLike,
-            as: 'PostLike',
-            required: false,
-            where:{
-                likedBy: req.user.id
+        order: [['dateposted', 'DESC'], [PostComment, 'dateposted', 'DESC']],
+        include: [
+            'PostedBy', 
+            'PostedOn', 
+            'PostFile', 
+            'PostLikes',
+            {
+                model: PostLike,
+                as: 'PostLike',
+                required: false,
+                where:{
+                    likedBy: req.user.id
+                }
+            },
+            {
+                model: PostComment,
+                required: false,
+                where: {
+                    postcommentId: null
+                },
+                include: [{
+                        model: User, 
+                        attributes: ['id', 'fullname', 'profilepicture']
+                    }, 
+                    { 
+                        model: PostComment, 
+                        as: 'Reply', 
+                        required: false, 
+                        where: { 
+                            postcommentId: {
+                                [Op.not] : null
+                            }
+                        },
+                        include: [{
+                            model: User,                            
+                            attributes: ['id', 'fullname', 'profilepicture']                            
+                        }]
+                    }
+                ],            
             }
-        },
-        {
-            model: PostComment, 
-            include: [User]
-        }],    
+        ],    
         nest: true
     });
     
 
     posts = posts.map((post) => post.get({ plain: true }));
     
-    console.log(posts);
+    console.log(posts[4].postcomments[0].Reply);
     return posts
 }
 

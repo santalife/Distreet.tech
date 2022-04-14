@@ -15,5 +15,5 @@ const PostComment = db.define('postcomment', {
     },
 });
 
-
+PostComment.isHierarchy();
 module.exports = PostComment;
