@@ -133,7 +133,7 @@ router.post('/profile/:fullname/reply/:commentId', ensureAuthenticated, async fu
         dateposted: moment(), 
         postId: parent.postId, 
         postedBy: req.user.id,
-        postcommentId: req.params.commentId
+        parentId: req.params.commentId
     })
 
     res.json('hello!');

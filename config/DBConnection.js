@@ -38,7 +38,7 @@ const setUpDB = (drop) => {
         // postcomment.belongsTo(post);
         user.hasMany(postcomment, {foreignKey: 'postedBy'});
         postcomment.belongsTo(user, {foreignKey: 'postedBy'});
-        postcomment.hasMany(postcomment, {as: 'Reply'});
+        postcomment.hasMany(postcomment, {as: 'Reply', foreignKey: 'parentId'});
 
         item.hasMany(itemfile);
 

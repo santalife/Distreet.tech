@@ -1,6 +1,9 @@
 const express = require('express');
 const moment = require('moment');
 
+const Sequelize = require('sequelize-hierarchy-nestjs')();
+require('sequelize-values')(Sequelize);
+
 //Login / Register Modules
 const passport = require('passport');
 const User = require('../models/User');
@@ -66,8 +69,16 @@ async function getAllPosts(req){
         },
         order: [['dateposted', 'DESC'], [PostComment, 'dateposted', 'DESC']],
         include: [
-            'PostedBy', 
-            'PostedOn', 
+            {
+                model: User,
+                as: 'PostedBy',
+                attributes: ['id', 'fullname', 'profilepicture']
+            },
+            {
+                model: User,
+                as: 'PostedOn',
+                attributes: ['id', 'fullname', 'profilepicture']
+            },
             'PostFile', 
             'PostLikes',
             {
@@ -79,24 +90,20 @@ async function getAllPosts(req){
                 }
             },
             {
-                model: PostComment,
+                model: PostComment,  
                 required: false,
                 where: {
-                    postcommentId: null
+                    parentId: null
                 },
-                include: [{
+                include: [                    
+                    {
                         model: User, 
                         attributes: ['id', 'fullname', 'profilepicture']
                     }, 
                     { 
                         model: PostComment, 
-                        as: 'Reply', 
-                        required: false, 
-                        where: { 
-                            postcommentId: {
-                                [Op.not] : null
-                            }
-                        },
+                        as: 'descendents',  
+                        hierarchy: true,                   
                         include: [{
                             model: User,                            
                             attributes: ['id', 'fullname', 'profilepicture']                            
@@ -104,14 +111,43 @@ async function getAllPosts(req){
                     }
                 ],            
             }
+            // {
+            //     model: PostComment,
+            //     include:[
+            //         {
+            //             model: PostComment,
+            //             as: 'descendents',
+            //             hierarchy: true,
+            //         }
+            //     ]
+            // }
         ],    
-        nest: true
     });
-    
 
     posts = posts.map((post) => post.get({ plain: true }));
+
+    posts = JSON.parse(JSON.stringify(posts));
     
-    // console.log(posts[4].postcomments[0].Reply);
+    let postcomments = await PostComment.findAll({
+        where:{
+            postId: 1
+        },
+        hierarchy: true,
+        include:[
+            {
+                model: PostComment,
+                as: 'descendents', 
+            }
+        ],  
+    });
+    postcomments = JSON.parse(JSON.stringify(postcomments))
+    
+    console.log(posts[0].postcomments[0].children);
+
+    console.log('Hello!');
+
+
+
     return posts
 }
 
