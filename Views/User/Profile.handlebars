@@ -801,7 +801,6 @@
                 $("#reply-" + commentId + "-form").submit(function(e){
                     e.preventDefault();
                     const url = window.location.pathname + '/reply/' + commentId;                    
-                    alert("#input-reply-" + commentId)
                     var reply = $("#input-reply-" + commentId).val()
                     console.log(reply);
                     var data = { reply }

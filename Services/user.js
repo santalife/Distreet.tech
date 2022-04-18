@@ -111,16 +111,6 @@ async function getAllPosts(req){
                     }
                 ],            
             }
-            // {
-            //     model: PostComment,
-            //     include:[
-            //         {
-            //             model: PostComment,
-            //             as: 'descendents',
-            //             hierarchy: true,
-            //         }
-            //     ]
-            // }
         ],    
     });
 
@@ -128,21 +118,21 @@ async function getAllPosts(req){
 
     posts = JSON.parse(JSON.stringify(posts));
     
-    let postcomments = await PostComment.findAll({
-        where:{
-            postId: 1
-        },
-        hierarchy: true,
-        include:[
-            {
-                model: PostComment,
-                as: 'descendents', 
-            }
-        ],  
-    });
-    postcomments = JSON.parse(JSON.stringify(postcomments))
+    // let postcomments = await PostComment.findAll({
+    //     where:{
+    //         postId: 1
+    //     },
+    //     hierarchy: true,
+    //     include:[
+    //         {
+    //             model: PostComment,
+    //             as: 'descendents', 
+    //         }
+    //     ],  
+    // });
+    // postcomments = JSON.parse(JSON.stringify(postcomments))
     
-    console.log(posts[0].postcomments[0].children);
+    // console.log(posts[0].postcomments[0].children);
 
     console.log('Hello!');
 
