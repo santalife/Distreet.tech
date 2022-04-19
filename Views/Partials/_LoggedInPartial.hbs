@@ -1,14 +1,45 @@
 <li class="nav-item d-flex align-items-center me-2">
     <div class="btn btn-outline-secondary border-0 rounded-pill pt-0 pb-0 px-2 pe-3">
-        <a href="/user/profile/{{user.fullname}}" class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
+        <a href="/user/profile/{{user.fullname}}" class="text-black text-decoration-none d-flex align-items-center"
+            id="dropdownUser1" aria-expanded="false">
             <img src="{{user.profilepicture}}" alt="mdo" width="30" height="30" class="rounded-circle me-2">
             <span class="navbar-text">{{user.fullname}}</span>
         </a>
     </div>
 </li>
+
+<li class="nav-item d-flex align-items-center me-2">
+    <div class="dropdown">
+        <button class="btn btn-secondary navbar-text rounded-pill fa-sm dropdown-togggle position-relative"
+            data-bs-auto-close="outside" data-bs-toggle="dropdown">
+            <span class="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
+                <i class="fas fa-bell"></i>
+            </span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                5
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </button>
+
+        <ul class="dropdown-menu ps-3 pe-3 pb-3" aria-labelledby="dropdownMenuLink">
+            <h3 class="fw-bold pt-2">Notifications</h3>
+            <div class="list-group">
+                <a href="#" class="dropdown-item list-group-item list-group-item-action border-0" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Friend Request</h5>
+                        <small>3 days ago</small>
+                    </div>
+                    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    <small>And some small print.</small>
+                </a>
+            </div>
+        </ul>
+    </div>
+
+</li>
 <li class="nav-item d-flex align-items-center">
     <div class="dropdown">
-        <a class="btn btn-secondary navbar-text rounded-pill fa-lg" data-bs-toggle="dropdown" >
+        <a class="btn btn-secondary navbar-text rounded-pill fa-lg" data-bs-toggle="dropdown">
             <span class="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account">
                 <i class="fas fa-caret-down"></i>
             </span>

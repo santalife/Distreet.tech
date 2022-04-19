@@ -7,7 +7,7 @@ const postfile = require('../Models/PostFile');
 const postcomment = require('../Models/PostComment');
 const itemfile = require('../Models/ItemFile');
 const friend = require('../Models/Friend');
-
+const notification =require('../Models/Notification');
 const item = require('../Models/Item');
 
 // If drop is true, all existing tables are dropped and recreated
@@ -44,6 +44,10 @@ const setUpDB = (drop) => {
         user.hasMany(postcomment, {foreignKey: 'postedBy'});
         postcomment.belongsTo(user, {foreignKey: 'postedBy'});
         postcomment.hasMany(postcomment, {as: 'Reply', foreignKey: 'parentId'});
+        
+        user.hasMany(notification);
+        notification.belongsTo(postcomment);
+        notification.belongsTo(postlike);
 
         item.hasMany(itemfile);
             
