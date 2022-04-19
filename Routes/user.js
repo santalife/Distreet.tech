@@ -10,7 +10,8 @@ const PostFile = require('../Models/PostFile');
 const PostLike = require('../Models/PostLike');
 const { raw } = require('handlebars-helpers/lib/string');
 const PostComment = require('../Models/PostComment');
-const Item = require('../Models/Item')
+const Item = require('../Models/Item');
+const Friend = require('../Models/Friend');
 
 
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
@@ -142,6 +143,23 @@ router.post('/profile/:fullname/reply/:commentId', ensureAuthenticated, async fu
 router.get('/profile/:fullname/editprofile', ensureAuthenticated, async function (req, res) {
     res.render('Main/index')
 })
+
+router.post('/profile/:fullname/addfriend', ensureAuthenticated, async function (req, res){
+    console.log('bastard');
+    console.log(req.params.fullname);
+    console.log(req.user.id)    
+    let requestee = await getUserByFullName(req.params.fullname);
+    console.log(requestee.id);
+    
+    await Friend.create({
+        status: false,
+        request_timestamp: moment(),
+        requesterId : req.user.id, 
+        requesteeId: requestee.id
+    });
+    res.json('Hello!');
+
+});
 
 router.get('/item/:id', async function (req, res){
     let item = await Item.findOne({

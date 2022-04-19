@@ -13,8 +13,15 @@
 
     <div class="row mt-2">
         <div class="col d-flex align-items-center justify-content-center">
+            {{#eq user.id profileuser.id}}
             <a class="btn btn-secondary fw-bold"><i class="fas fa-edit"></i>
                 Edit Profile</a>
+            {{else}}
+            <form method="post" id="add-friend">
+                <button class="btn btn-secondary fw-bold" type="submit"><i class="fas fa-user-plus"></i>
+                    Add Friend</button>
+            </form>
+            {{/eq}}
         </div>
     </div>
 </div>
@@ -730,7 +737,7 @@
             })
         })
 
-        $(function () {
+        /*$(function () {
             $("#like-form").submit(function (e) {
                 e.preventDefault();
                 $.ajax({
@@ -743,8 +750,24 @@
                     }
                 })
             })
-        })
+        })*/
 
+        $(function () {
+            $("#add-friend").submit(function (e) {
+                alert('Hello!');
+                e.preventDefault();
+                $.ajax({
+                    url: window.location.pathname + '/addfriend',
+                    type: 'POST',                    
+                    contentType: false,
+                    processData: false,
+                    'success': (data) => {
+                        
+                        setInterval('location.reload()', 100);
+                    }
+                })
+            })
+        })
     </script>
 
     <script>
