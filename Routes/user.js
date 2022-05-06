@@ -3,7 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const mysql = require('mysql');
 const Post = require('../models/Post');
-const { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId } = require("../services/user")
+const { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId, getAllPurchase } = require("../services/user")
 const { authUser, authNotUser, authRole, ensureAuthenticated } = require("../services/auth");
 const upload = require('../Services/imageUpload');
 const PostFile = require('../Models/PostFile');
@@ -12,14 +12,27 @@ const { raw } = require('handlebars-helpers/lib/string');
 const PostComment = require('../Models/PostComment');
 const Item = require('../Models/Item');
 const Friend = require('../Models/Friend');
+const Purchase = require('../Models/Purchase');
 
 
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
     let posts = await getAllPosts(req);
 
-    let profileuser = await getUserByFullName(req.params.fullname);
+    // for(var i = 0 ; i < posts.length ; i++){
+    //     posts[i].likes = await getLikesFromPostId(posts[i].id);
+    //     posts[i].liked = await PostLike.findOne({
+    //         where:{
+    //             postId : posts[i].id,
+    //             userId : req.user.id
+    //         },
+    //         raw: true            
+    //     });
+    // };
 
-    res.render('User/Profile', { posts, profileuser });
+    let purchases = await getAllPurchase(req);
+    let profileuser = await getUserByFullName(req.params.fullname);
+    console.log(purchases);
+    res.render('User/Profile', { posts, profileuser, purchases });
 });
 
 
@@ -170,7 +183,30 @@ router.get('/item/:id', async function (req, res){
     });
     console.log(item);
     res.render('User/item', {item});
-})
+});
+
+router.post('/item/:id', async function (req, res){
+    let quantity = req.body.quantity;
+    let purchase = await Purchase.create({
+        date_purchased: moment(),
+        quantity,
+        itemId: req.params.id,
+        userId: req.user.id,
+        status: "To Ship"
+    })
+    res.redirect('/');
+});
+
+router.put('/purchase/:id/cancel', async function (req, res){
+    await Purchase.update({
+        status: "Cancelled"
+    },{
+        where: {
+            id: req.params.id
+        }
+    });
+    res.redirect('/');
+});
 
 
 module.exports = router;
