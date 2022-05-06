@@ -33,6 +33,9 @@
     "mysql2": "^2.3.3",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "sequelize": "^6.17.0"
+    "sequelize": "^6.17.0",
+    "sequelize-hierarchy-fork": "^1.0.0",
+    "sequelize-hierarchy-nestjs": "^2.999.4",
+    "sequelize-values": "^1.1.0"
   }
 }

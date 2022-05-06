@@ -11,6 +11,7 @@ const PostLike = require('../Models/PostLike');
 const { raw } = require('handlebars-helpers/lib/string');
 const PostComment = require('../Models/PostComment');
 const Item = require('../Models/Item');
+const Friend = require('../Models/Friend');
 const Purchase = require('../Models/Purchase');
 
 
@@ -122,13 +123,56 @@ router.post('/profile/:fullname/comment/:postId', ensureAuthenticated, async fun
     
     console.log('iam commenting');
     console.log(req.body.comment);
+    console.log(req.user.id);
     await PostComment.create({comment: req.body.comment, lastupdated: moment(), dateposted: moment(), postId: req.params.postId, postedBy: req.user.id})
+    res.json('hello!');
+})
+
+//REPLY FEATURE
+router.post('/profile/:fullname/reply/:commentId', ensureAuthenticated, async function (req, res) {
+    
+    console.log('iam replying');
+    console.log(req.params.commentId);
+
+    let parent = await PostComment.findOne({
+        where : {
+            id: req.params.commentId
+        },
+        raw : true        
+    });
+    console.log(parent);
+    await PostComment.create({
+        comment: req.body.reply, 
+        lastupdated: moment(), 
+        dateposted: moment(), 
+        postId: parent.postId, 
+        postedBy: req.user.id,
+        parentId: req.params.commentId
+    })
+
     res.json('hello!');
 })
 
 router.get('/profile/:fullname/editprofile', ensureAuthenticated, async function (req, res) {
     res.render('Main/index')
 })
+
+router.post('/profile/:fullname/addfriend', ensureAuthenticated, async function (req, res){
+    console.log('bastard');
+    console.log(req.params.fullname);
+    console.log(req.user.id)    
+    let requestee = await getUserByFullName(req.params.fullname);
+    console.log(requestee.id);
+    
+    await Friend.create({
+        status: false,
+        request_timestamp: moment(),
+        requesterId : req.user.id, 
+        requesteeId: requestee.id
+    });
+    res.json('Hello!');
+
+});
 
 router.get('/item/:id', async function (req, res){
     let item = await Item.findOne({

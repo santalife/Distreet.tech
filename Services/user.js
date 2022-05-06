@@ -1,6 +1,9 @@
 const express = require('express');
 const moment = require('moment');
 
+const Sequelize = require('sequelize-hierarchy-nestjs')();
+require('sequelize-values')(Sequelize);
+
 //Login / Register Modules
 const passport = require('passport');
 const User = require('../models/User');
@@ -12,6 +15,7 @@ const upload = require('../Services/imageUpload');
 
 var bcrypt = require('bcryptjs');
 const PostLike = require('../Models/PostLike');
+const { Op } = require('sequelize')
 
 const Purchase = require('../Models/Purchase');
 const Item = require('../Models/Item');
@@ -67,29 +71,76 @@ async function getAllPosts(req){
         where: {
             postedOn: user.id,            
         },
-        order: [['dateposted', 'DESC']],
-        include: ['PostedBy', 
-        'PostedOn', 
-        'PostFile', 
-        'PostLikes',
-        {
-            model: PostLike,
-            as: 'PostLike',
-            required: false,
-            where:{
-                likedBy: req.user.id
+        order: [['dateposted', 'DESC'], [PostComment, 'dateposted', 'DESC']],
+        include: [
+            {
+                model: User,
+                as: 'PostedBy',
+                attributes: ['id', 'fullname', 'profilepicture']
+            },
+            {
+                model: User,
+                as: 'PostedOn',
+                attributes: ['id', 'fullname', 'profilepicture']
+            },
+            'PostFile', 
+            'PostLikes',
+            {
+                model: PostLike,
+                as: 'PostLike',
+                required: false,
+                where:{
+                    likedBy: req.user.id
+                }
+            },
+            {
+                model: PostComment,  
+                required: false,
+                where: {
+                    parentId: null
+                },
+                include: [                    
+                    {
+                        model: User, 
+                        attributes: ['id', 'fullname', 'profilepicture']
+                    }, 
+                    { 
+                        model: PostComment, 
+                        as: 'descendents',  
+                        hierarchy: true,                   
+                        include: [{
+                            model: User,                            
+                            attributes: ['id', 'fullname', 'profilepicture']                            
+                        }]
+                    }
+                ],            
             }
-        },
-        {
-            model: PostComment, 
-            include: [User]
-        }],    
-        nest: true
+        ],    
     });
-    
     posts = posts.map((post) => post.get({ plain: true }));
+
+    posts = JSON.parse(JSON.stringify(posts));
     
-    console.log(posts);
+    // let postcomments = await PostComment.findAll({
+    //     where:{
+    //         postId: 1
+    //     },
+    //     hierarchy: true,
+    //     include:[
+    //         {
+    //             model: PostComment,
+    //             as: 'descendents', 
+    //         }
+    //     ],  
+    // });
+    // postcomments = JSON.parse(JSON.stringify(postcomments))
+    
+    // console.log(posts[0].postcomments[0].children);
+
+    console.log('Hello!');
+
+
+
     return posts
 }
 async function getAllPurchase(req){

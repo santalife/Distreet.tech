@@ -6,9 +6,10 @@ const postlike = require('../Models/PostLike');
 const postfile = require('../Models/PostFile');
 const postcomment = require('../Models/PostComment');
 const itemfile = require('../Models/ItemFile');
-
-
+const friend = require('../Models/Friend');
+const notification =require('../Models/Notification');
 const item = require('../Models/Item');
+
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
@@ -25,6 +26,10 @@ const setUpDB = (drop) => {
         user.hasMany(event);
         user.hasMany(item);
 
+        user.hasMany(friend, {as: 'Requester', foreignKey:'requesterId'});
+        user.hasMany(friend, {as: 'Requestee', foreignKey:'requesteeId'});
+        
+
         post.hasMany(postfile, {as: 'PostFile', foreignKey: 'postId'});    
         postfile.belongsTo(post, {as: 'PostFile', foreignKey: 'postId'});
 
@@ -35,14 +40,17 @@ const setUpDB = (drop) => {
         postlike.belongsTo(user, {as: 'PostLikeBy', foreignKey: 'likedBy'});
 
         post.hasMany(postcomment);
-        postcomment.belongsTo(post);
+        // postcomment.belongsTo(post);
         user.hasMany(postcomment, {foreignKey: 'postedBy'});
         postcomment.belongsTo(user, {foreignKey: 'postedBy'});
-        postcomment.hasMany(postcomment);
+        postcomment.hasMany(postcomment, {as: 'Reply', foreignKey: 'parentId'});
+        
+        user.hasMany(notification);
+        notification.belongsTo(postcomment);
+        notification.belongsTo(postlike);
 
         item.hasMany(itemfile);
-
-
+            
         mySQLDB.sync({ // Creates table if none exists
             force: drop
         }).then(() => {
