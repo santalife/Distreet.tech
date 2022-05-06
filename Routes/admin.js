@@ -37,7 +37,7 @@ router.post('/manage/items/create', async function (req, res) {
                 post_date: moment(),
                 last_updated: moment(),
                 status,
-                stock,
+                stock,                
                 sold: false
             });
 

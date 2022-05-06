@@ -1,9 +1,10 @@
 {{#if item}}
+<form method="POST">
 <div class="row gy-3 gx-3">
-    <div class="col-md-5"><img src="/img/yanz.jpg" class="img-fluid"/>
+    <div class="col-md-5"><img src="/img/yanz.jpg" class="img-fluid" />
     </div>
     <div class="col-md-7">
-        <div class="row gy-3 d-flex align-items-end flex-column">
+        <div class="row gy-3">
             <div class="col-md-12">
                 <h2>{{item.name}}</h2>
             </div>
@@ -12,11 +13,28 @@
             </div>
             <div class="col-md-12">
                 <input id="input-id" name="input-name" type="number" class="rating" value="4.6">
-                <p>Options</p>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-btn">
+                        <button type="button" class="quantity-left-minus btn btn-primary btn-number"
+                            onclick="decreaseCount(event, this);">
+                            <i class="far fa-minus"></i>
+                        </button>
+                    </span>
+                    <input type="text" id="quantity" name="quantity" class="form-control text-center" value="1">
+                    <span class="input-group-btn">
+                        <button type="button" class="quantity-right-plus btn btn-primary btn-number"
+                            onclick="increaseCount(event, this);">
+                            <i class="far fa-plus"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div class="col-md-12 mb-3 mb-sm-0">
-                <button type="button" class="btn btn-outline-primary fw-bold"><i class="fal fa-shopping-cart"></i> Add to Cart</button>
-                <button type="button" class="btn btn-primary fw-bold ps-4 pe-4">Buy</button>
+                <button type="button" class="btn btn-outline-primary fw-bold"><i class="fal fa-shopping-cart"></i> Add
+                    to Cart</button>
+                <button type="submit" class="btn btn-primary fw-bold ps-4 pe-4">Buy</button>
             </div>
         </div>
     </div>
@@ -25,8 +43,28 @@
         <p>{{item.description}}</p>
     </div>
 </div>
+</form>
 {{/if}}
+
 <script>
-// with plugin options
-$("#input-id").rating({displayOnly: true, min:0, max:5, step:0.1, size:'md'});
+    // with plugin options
+    $("#input-id").rating({ displayOnly: true, min: 0, max: 5, step: 0.1, size: 'md' });
+
+    // quantity counter
+    function increaseCount(a, b) {
+        var input = document.getElementById('quantity');
+        var value = parseInt(input.value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        input.value = value;
+    }
+    function decreaseCount(a, b) {
+        var input = document.getElementById('quantity');
+        var value = parseInt(input.value, 10);
+        if (value > 1) {
+            value = isNaN(value) ? 0 : value;
+            value--;
+            input.value = value;
+        }
+    }
 </script>
