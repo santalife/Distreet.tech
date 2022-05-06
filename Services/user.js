@@ -13,6 +13,10 @@ const upload = require('../Services/imageUpload');
 var bcrypt = require('bcryptjs');
 const PostLike = require('../Models/PostLike');
 
+const Purchase = require('../Models/Purchase');
+const Item = require('../Models/Item');
+const ItemFile = require('../Models/ItemFile');
+
 function register(req, res){
     upload(req, res, async function  (err) {
         if (err) {
@@ -83,12 +87,28 @@ async function getAllPosts(req){
         nest: true
     });
     
-
     posts = posts.map((post) => post.get({ plain: true }));
     
     console.log(posts);
     return posts
 }
+async function getAllPurchase(req){
+    let user = await getUserByFullName(req.params.fullname);
+    
+    let purchases = await Purchase.findAll({
+        where: {
+            userId: user.id,
+        },
+        order: [['date_purchased', 'DESC']],
+        include: [User,{
+            model: Item, 
+            include: [ItemFile]
+        }],
+        nest: true
+    })
+    purchases = purchases.map((purchase) => purchase.get({ plain: true }));
+    return purchases;
+};
 
 async function getLikesFromPostId(postId){
     let postLikes = await PostLike.findAll({
@@ -113,4 +133,4 @@ async function standardPost(req){
         postedOn : profileuser.id,
     });
 };
-module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId};
+module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId, getAllPurchase};

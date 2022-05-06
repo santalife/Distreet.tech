@@ -37,8 +37,8 @@
             type="button" role="tab" aria-controls="pills-photos" aria-selected="true">Photos</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="pill" id="pills-more-tab" data-bs-target="#pills-more" type="button"
-            role="tab" aria-controls="pills-more" aria-selected="true">More</button>
+        <button class="nav-link" data-bs-toggle="pill" id="pills-order-history-tab" data-bs-target="#pills-order-history" type="button"
+            role="tab" aria-controls="pills-order-history" aria-selected="true">Order History</button>
     </li>
 </ul>
 
@@ -672,7 +672,43 @@
             </div>
         </div>
 
-        <div class="tab-pane fade" id="pills-more" role="tabpanel" aria-labelledby="pills-more-tab">
+        <div class="tab-pane fade" id="pills-order-history" role="tabpanel" aria-labelledby="pills-order-history-tab">
+            {{#each purchases}}
+                <div class="card mt-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="row gy-3 p-2">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <p>Shop Name</p>
+                                <p class="fw-bold">{{status}}</p>
+                            </div>
+                            <div class="col-md-2">
+                                {{#withFirst item.itemfiles}}
+                                    <img src="{{this.imagepath}}" class="img-fluid">
+                                {{/withFirst}}
+                            </div>
+                            <div class="col-md-10">
+                                <p class="fs-3">{{item.name}}</p>
+                                <p>{{item.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row gy-3 p-2">
+                            <div class="col-md-4 offset-md-8 d-flex justify-content-end">
+                                <p class="fs-3">$ {{item.price}}</p>
+                            </div>
+                            <div class="col-md-6 offset-md-6 d-flex justify-content-end">
+                                {{#eq status "To Ship"}}
+                                <form method="POST" action="/user/purchase/{{id}}/cancel?_method=PUT">
+                                    <button type="submit" class="btn btn-danger fw-bold me-3">Cancel Order</button>
+                                </form>
+                                {{/eq}}
+                                <button type="button" class="btn btn-outline-danger fw-bold">Buy Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
         </div>
     </div>
 
