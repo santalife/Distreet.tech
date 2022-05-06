@@ -142,13 +142,14 @@ async function getAllPosts(req){
 
 
     return posts
-}
+};
+
 async function getAllPurchase(req){
     let user = await getUserByFullName(req.params.fullname);
     
     let purchases = await Purchase.findAll({
         where: {
-            userId: user.id,
+            buyerId: user.id,
         },
         order: [['date_purchased', 'DESC']],
         include: [{
@@ -165,7 +166,9 @@ async function getAllPurchase(req){
         }],
         nest: true
     })
+
     purchases = purchases.map((purchase) => purchase.get({ plain: true }));
+
     return purchases;
 };
 
