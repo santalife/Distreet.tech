@@ -9,6 +9,8 @@ const itemfile = require('../Models/ItemFile');
 const friend = require('../Models/Friend');
 const notification =require('../Models/Notification');
 const item = require('../Models/Item');
+const purchase = require('../Models/Purchase');
+
 
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
@@ -17,6 +19,12 @@ const setUpDB = (drop) => {
             console.log('Distreet database connected');
         })
         .then(() => {
+
+        purchase.belongsTo(user, {as:'Buyer', foreignKey:'buyerId'})
+        purchase.belongsTo(user, {as: 'Seller', foreignKey:'sellerId'});
+
+        purchase.belongsTo(item);
+        
 
         user.hasMany(post, {as: 'PostedBy', foreignKey: 'postedBy'});
         post.belongsTo(user, {as: 'PostedBy', foreignKey: 'postedBy'});
@@ -29,7 +37,6 @@ const setUpDB = (drop) => {
         user.hasMany(friend, {as: 'Requester', foreignKey:'requesterId'});
         user.hasMany(friend, {as: 'Requestee', foreignKey:'requesteeId'});
         
-
         post.hasMany(postfile, {as: 'PostFile', foreignKey: 'postId'});    
         postfile.belongsTo(post, {as: 'PostFile', foreignKey: 'postId'});
 
@@ -50,7 +57,6 @@ const setUpDB = (drop) => {
         notification.belongsTo(postlike);
 
         item.hasMany(itemfile);
-            
         mySQLDB.sync({ // Creates table if none exists
             force: drop
         }).then(() => {
