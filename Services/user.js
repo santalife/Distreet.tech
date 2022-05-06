@@ -151,7 +151,15 @@ async function getAllPurchase(req){
             userId: user.id,
         },
         order: [['date_purchased', 'DESC']],
-        include: [User,{
+        include: [{
+            model:User,
+            as:'Buyer'
+        },
+        {
+            model:User,
+            as:'Seller'
+        },
+        {
             model: Item, 
             include: [ItemFile]
         }],
