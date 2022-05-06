@@ -33,7 +33,6 @@ router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async fu
     // };
 
     let purchases = await getAllPurchase(req);
-    console.log(purchases);
 
     let profileuser = await getUserByFullName(req.params.fullname);
 
