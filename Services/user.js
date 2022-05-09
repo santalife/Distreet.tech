@@ -195,4 +195,8 @@ async function standardPost(req){
         postedOn : profileuser.id,
     });
 };
+
+async function test(){
+
+};
 module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId, getAllPurchase};
