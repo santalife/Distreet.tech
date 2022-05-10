@@ -13,9 +13,6 @@ const PostComment = require('../Models/PostComment');
 const Item = require('../Models/Item');
 const Friend = require('../Models/Friend');
 const Purchase = require('../Models/Purchase');
-const User = require('../Models/User');
-
-
 
 
 router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async function (req, res) {
@@ -32,10 +29,9 @@ router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async fu
     //     });
     // };
 
-    let purchases = await getAllPurchase(req);
-
+    // let purchases = await getAllPurchase(req);
     let profileuser = await getUserByFullName(req.params.fullname);
-
+    // console.log(purchases);
     res.render('User/Profile', { posts, profileuser });
 });
 
