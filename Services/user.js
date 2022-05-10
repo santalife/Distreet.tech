@@ -142,22 +142,33 @@ async function getAllPosts(req){
 
 
     return posts
-}
+};
+
 async function getAllPurchase(req){
     let user = await getUserByFullName(req.params.fullname);
     
     let purchases = await Purchase.findAll({
         where: {
-            userId: user.id,
+            buyerId: user.id,
         },
         order: [['date_purchased', 'DESC']],
-        include: [User,{
+        include: [{
+            model:User,
+            as:'Buyer'
+        },
+        {
+            model:User,
+            as:'Seller'
+        },
+        {
             model: Item, 
             include: [ItemFile]
         }],
         nest: true
     })
+
     purchases = purchases.map((purchase) => purchase.get({ plain: true }));
+
     return purchases;
 };
 
@@ -183,5 +194,9 @@ async function standardPost(req){
         postedBy : req.user.id,
         postedOn : profileuser.id,
     });
+};
+
+async function test(){
+
 };
 module.exports = { register, getAllPosts, getUserByFullName, standardPost, getLikesFromPostId, getAllPurchase};

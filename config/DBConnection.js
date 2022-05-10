@@ -19,6 +19,12 @@ const setUpDB = (drop) => {
         })
         .then(() => {
 
+        purchase.belongsTo(user, {as:'Buyer', foreignKey:'buyerId'})
+        purchase.belongsTo(user, {as: 'Seller', foreignKey:'sellerId'});
+
+        purchase.belongsTo(item);
+        
+
         user.hasMany(post, {as: 'PostedBy', foreignKey: 'postedBy'});
         post.belongsTo(user, {as: 'PostedBy', foreignKey: 'postedBy'});
         user.hasMany(post, {as: 'PostedOn', foreignKey: 'postedOn'});
@@ -31,7 +37,6 @@ const setUpDB = (drop) => {
         user.hasMany(friend, {as: 'Requester', foreignKey:'requesterId'});
         user.hasMany(friend, {as: 'Requestee', foreignKey:'requesteeId'});
         
-
         post.hasMany(postfile, {as: 'PostFile', foreignKey: 'postId'});    
         postfile.belongsTo(post, {as: 'PostFile', foreignKey: 'postId'});
 
@@ -52,7 +57,6 @@ const setUpDB = (drop) => {
         notification.belongsTo(postlike);
 
         item.hasMany(itemfile);
-            
         mySQLDB.sync({ // Creates table if none exists
             force: drop
         }).then(() => {
