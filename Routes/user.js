@@ -29,9 +29,9 @@ router.get('/profile/:fullname', ensureAuthenticated, authRole("user"), async fu
     //     });
     // };
 
-    // let purchases = await getAllPurchase(req);
+    let purchases = await getAllPurchase(req);
     let profileuser = await getUserByFullName(req.params.fullname);
-    // console.log(purchases);
+    console.log(purchases);
     res.render('User/Profile', { posts, profileuser });
 });
 
