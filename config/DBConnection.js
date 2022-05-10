@@ -32,7 +32,7 @@ const setUpDB = (drop) => {
 
         user.hasMany(event);
         user.hasMany(item);
-        user.hasMany(purchase);
+        // user.hasMany(purchase);
 
         user.hasMany(friend, {as: 'Requester', foreignKey:'requesterId'});
         user.hasMany(friend, {as: 'Requestee', foreignKey:'requesteeId'});
