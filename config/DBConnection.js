@@ -9,6 +9,7 @@ const itemfile = require('../Models/ItemFile');
 const friend = require('../Models/Friend');
 const notification =require('../Models/Notification');
 const item = require('../Models/Item');
+const purchase = require('../Models/Purchase');
 
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
@@ -25,6 +26,7 @@ const setUpDB = (drop) => {
 
         user.hasMany(event);
         user.hasMany(item);
+        user.hasMany(purchase);
 
         user.hasMany(friend, {as: 'Requester', foreignKey:'requesterId'});
         user.hasMany(friend, {as: 'Requestee', foreignKey:'requesteeId'});
